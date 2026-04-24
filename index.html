@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BETGRID | Tipster Marketplace</title>
+  <title>Betslip Pirates | Tipster Marketplace</title>
   <style>
     :root {
       --bg: #07090d;
@@ -43,7 +43,8 @@
     body {
       position: relative;
       overflow-x: hidden;
-      background-image: none;
+      /* background-image: radial-gradient(100% 55% at 15% -10%, rgba(45, 130, 255, 0.16), transparent 60%), */
+                        /* radial-gradient(70% 55% at 85% 18%, rgba(22, 209, 137, 0.1), transparent 65%); */
     }
 
     body::before {
@@ -52,18 +53,15 @@
       inset: 0;
       pointer-events: none;
       z-index: -1;
-      background-image: none;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
       background-size: 28px 28px;
-      mask-image: none;
+      mask-image: linear-gradient(180deg, black 0%, rgba(0, 0, 0, 0.55) 60%, transparent 100%);
     }
 
     .container {
       width: min(1120px, 92vw);
       margin-inline: auto;
-    }
-
-    .hero-proof {
-      display: block;
     }
 
     .topbar {
@@ -98,7 +96,7 @@
       font-size: 0.92rem;
       font-weight: 900;
       color: #dfeaff;
-      background: #2d82ff;
+      background: linear-gradient(135deg, #1666f5, #2d82ff);
       box-shadow: 0 7px 20px rgba(45, 130, 255, 0.35);
       flex-shrink: 0;
     }
@@ -223,7 +221,7 @@
     #buyer:checked + label,
     #seller:checked + label {
       color: #f5f7ff;
-      background: #242b38;
+      background: linear-gradient(180deg, #2a313f 0%, #1f2531 100%);
     }
 
     .waitlist-form {
@@ -232,7 +230,7 @@
       gap: 0.6rem;
       border: 1px solid #232f42;
       border-radius: 0.75rem;
-      background: #141a25;
+      background: linear-gradient(140deg, #121722, #161c28);
       padding: 0.45rem;
       box-shadow: var(--shadow-card);
     }
@@ -260,7 +258,7 @@
       letter-spacing: -0.01em;
       font-size: 0.98rem;
       color: #f4f8ff;
-      background: #2d82ff;
+      background: linear-gradient(135deg, #1b6cff, #2d82ff);
       box-shadow: 0 6px 18px rgba(38, 113, 241, 0.4);
     }
 
@@ -283,7 +281,7 @@
       border: 1px solid #283245;
       border-radius: var(--radius-xl);
       overflow: hidden;
-      background: #121823;
+      background: linear-gradient(180deg, #151c28 0%, #111722 70%, #0b1019 100%);
       box-shadow: var(--shadow-card);
       max-width: 760px;
     }
@@ -371,7 +369,7 @@
       min-width: 7.8rem;
       border-radius: 0.45rem;
       border: 1px solid #2f3f55;
-      background: #182231;
+      background: linear-gradient(135deg, #1b2536, #141b28);
       color: #e8f0ff;
       padding: 0.54rem 0.7rem;
       font-size: 0.83rem;
@@ -544,7 +542,7 @@
     .trust-card {
       border: 1px solid #1f2b3f;
       border-radius: var(--radius-xl);
-      background: rgba(14, 20, 30, 0.92);
+      background: linear-gradient(170deg, rgba(18, 24, 35, 0.88), rgba(11, 15, 23, 0.92));
       box-shadow: var(--shadow-card);
       padding: 1rem;
       display: grid;
@@ -688,32 +686,11 @@
         border-radius: var(--radius-lg);
         padding: 1rem;
         min-height: 100%;
-        background: rgba(12, 17, 26, 0.9);
+        background: linear-gradient(180deg, rgba(15, 21, 31, 0.86), rgba(10, 14, 22, 0.9));
       }
 
       .trust-card {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .hero-proof {
-        display: grid;
-        grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
-        gap: 2rem;
-        align-items: start;
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-      }
-
-      .hero-proof .hero,
-      .hero-proof .proof {
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-
-      .hero-proof .slip {
-        margin-left: auto;
       }
     }
   </style>
@@ -721,120 +698,118 @@
 <body>
   <header class="topbar">
     <div class="container topbar-inner">
-      <div class="brand" aria-label="BETGRID">
+      <div class="brand" aria-label="Betslip Pirates">
         <span class="brand-mark" aria-hidden="true">B</span>
-        <span class="brand-text">BETGRID</span>
+        <span class="brand-text">Betslip Pirates</span>
       </div>
       <button class="btn btn-light" type="button">Pro Tipster?</button>
     </div>
   </header>
 
   <main>
-    <div class="container hero-proof">
-      <section class="hero">
-        <div class="hero-wrap">
-          <p class="beta-badge"><span class="beta-dot" aria-hidden="true"></span>2026/2027 Season Private Beta</p>
+    <section class="container hero">
+      <div class="hero-wrap">
+        <p class="beta-badge"><span class="beta-dot" aria-hidden="true"></span>2026/2027 Season Private Beta</p>
 
-          <h1>
-            <span class="title-strong">Invest in</span>
-            <span class="title-soft">Winning Slips.</span>
-          </h1>
+        <h1>
+          <span class="title-strong">Invest in</span>
+          <span class="title-soft">Winning Slips.</span>
+        </h1>
 
-          <p class="lead">
-            The marketplace where results are verified by data, and buyers only pay when the tipster wins.
-            Join the waitlist for the upcoming EPL season.
-          </p>
+        <p class="lead">
+          The marketplace where results are verified by data, and buyers only pay when the tipster wins.
+          Join the waitlist for the upcoming EPL season.
+        </p>
 
-          <section class="waitlist" aria-label="Waitlist Signup">
-            <div class="segmented" role="radiogroup" aria-label="Audience Segment">
-              <input type="radio" id="buyer" name="audience" checked>
-              <label for="buyer">Buyer</label>
-              <input type="radio" id="seller" name="audience">
-              <label for="seller">Tipster</label>
-            </div>
+        <section class="waitlist" aria-label="Waitlist Signup">
+          <div class="segmented" role="radiogroup" aria-label="Audience Segment">
+            <input type="radio" id="buyer" name="audience" checked>
+            <label for="buyer">Buyer</label>
+            <input type="radio" id="seller" name="audience">
+            <label for="seller">Tipster</label>
+          </div>
 
-            <form class="waitlist-form" action="#" method="post">
-              <input id="email" type="email" name="email" placeholder="Email address" autocomplete="email" required>
-              <button id="joinBtn" class="btn btn-cta" type="submit">Join List</button>
-            </form>
+          <form class="waitlist-form" action="#" method="post">
+            <input id="email" type="email" name="email" placeholder="Email address" autocomplete="email" required>
+            <button id="joinBtn" class="btn btn-cta" type="submit">Join List</button>
+          </form>
 
-            <p id="queueText" class="queue">1,240+ users currently in queue</p>
-          </section>
+          <p id="queueText" class="queue">1,240+ users currently in queue</p>
+        </section>
+      </div>
+    </section>
+
+    <section class="container proof" aria-label="Live Proof Slip">
+      <article class="slip">
+        <div class="slip-header">
+          <div>
+            <h2 class="slip-title">EPL Weekend Accumulator</h2>
+            <p class="slip-sub">5 Matches • by Betslip Pirates Pro</p>
+          </div>
+          <div class="slip-meta">
+            <p class="odds">18.40</p>
+            <p class="odds-label">Total Odds</p>
+          </div>
         </div>
-      </section>
 
-      <section class="proof" aria-label="Live Proof Slip">
-        <article class="slip">
-          <div class="slip-header">
+        <ul class="match-list">
+          <li class="match">
             <div>
-              <h2 class="slip-title">EPL Weekend Accumulator</h2>
-              <p class="slip-sub">5 Matches - by BETGRID Pro</p>
+              <p class="kickoff">Saturday, 15:00 • 1X2</p>
+              <p class="fixture">Liverpool vs Man Utd</p>
             </div>
-            <div class="slip-meta">
-              <p class="odds">18.40</p>
-              <p class="odds-label">Total Odds</p>
+            <div class="locked" aria-label="Locked Prediction">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
+              </svg>
+              <span class="locked-text">HOME WIN</span>
             </div>
+          </li>
+
+          <li class="match">
+            <div>
+              <p class="kickoff">Sunday, 16:30 • Over/Under</p>
+              <p class="fixture">Arsenal vs Aston Villa</p>
+            </div>
+            <div class="locked" aria-label="Locked Prediction">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
+              </svg>
+              <span class="locked-text">OVER 2.5</span>
+            </div>
+          </li>
+
+          <li class="match">
+            <div>
+              <p class="kickoff">Sunday, 17:30 • Double Chance</p>
+              <p class="fixture">Chelsea vs Newcastle</p>
+            </div>
+            <div class="locked" aria-label="Locked Prediction">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
+              </svg>
+              <span class="locked-text">X2</span>
+            </div>
+          </li>
+        </ul>
+
+        <div class="slip-footer">
+          <div>
+            <p class="win-row">Win Rate • 78.4%</p>
+            <p class="reveal-note">Reveals automatically upon purchase.</p>
           </div>
+          <button class="reveal" type="button">Pay $5.00 To Reveal</button>
+        </div>
 
-          <ul class="match-list">
-            <li class="match">
-              <div>
-                <p class="kickoff">Saturday, 15:00 - 1X2</p>
-                <p class="fixture">Liverpool vs Man Utd</p>
-              </div>
-              <div class="locked" aria-label="Locked Prediction">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
-                </svg>
-                <span class="locked-text">HOME WIN</span>
-              </div>
-            </li>
-
-            <li class="match">
-              <div>
-                <p class="kickoff">Sunday, 16:30 - Over/Under</p>
-                <p class="fixture">Arsenal vs Aston Villa</p>
-              </div>
-              <div class="locked" aria-label="Locked Prediction">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
-                </svg>
-                <span class="locked-text">OVER 2.5</span>
-              </div>
-            </li>
-
-            <li class="match">
-              <div>
-                <p class="kickoff">Sunday, 17:30 - Double Chance</p>
-                <p class="fixture">Chelsea vs Newcastle</p>
-              </div>
-              <div class="locked" aria-label="Locked Prediction">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
-                </svg>
-                <span class="locked-text">X2</span>
-              </div>
-            </li>
-          </ul>
-
-          <div class="slip-footer">
-            <div>
-              <p class="win-row">Win Rate - 78.4%</p>
-              <p class="reveal-note">Reveals automatically upon purchase.</p>
-            </div>
-            <button class="reveal" type="button">Pay $5.00 To Reveal</button>
+        <aside class="escrow-pill" aria-label="Escrow Active">
+          <div class="escrow-icon">✓</div>
+          <div>
+            <p class="escrow-title">Escrow Active</p>
+            <p class="escrow-copy">Payout only if all legs win.</p>
           </div>
-
-          <aside class="escrow-pill" aria-label="Escrow Active">
-            <div class="escrow-icon">OK</div>
-            <div>
-              <p class="escrow-title">Escrow Active</p>
-              <p class="escrow-copy">Payout only if all legs win.</p>
-            </div>
-          </aside>
-        </article>
-      </section>
-    </div>
+        </aside>
+      </article>
+    </section>
 
     <section class="container protocol" aria-label="How It Works">
       <h2 class="section-title">The Protocol</h2>
@@ -867,7 +842,7 @@
     <section class="container trust" aria-label="Trust Indicators">
       <div class="trust-card">
         <article class="trust-row">
-          <div class="trust-icon blue">ZR</div>
+          <div class="trust-icon blue">⌁</div>
           <div>
             <h4>Zero-Risk For Buyers</h4>
             <p>Refunds are processed in real-time when a slip fails.</p>
@@ -875,7 +850,7 @@
         </article>
 
         <article class="trust-row">
-          <div class="trust-icon green">API</div>
+          <div class="trust-icon green">⚡</div>
           <div>
             <h4>API-Verified Data</h4>
             <p>All outcomes are synced directly with EPL match feeds.</p>
@@ -899,7 +874,7 @@
   </main>
 
   <footer class="footer">
-    (c) 2026 BETGRID. ALL RIGHTS RESERVED. DATA VERIFIED VIA API-FOOTBALL.
+    © 2026 Betslip Pirates. ALL RIGHTS RESERVED. DATA VERIFIED VIA API-FOOTBALL.
   </footer>
 
   <script>
