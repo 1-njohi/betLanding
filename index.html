@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BETGRID | Tipster Marketplace</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #101418;
+      --surface-2: #131921;
+      --text: #f2f6fb;
+      --muted: #9aa8b9;
+      --line: #223041;
+      --emerald: #1fd08f;
+      --emerald-soft: #11382b;
+      --blue: #2b8dff;
+      --blue-soft: #102845;
+      --radius-lg: 1.25rem;
+      --radius-md: 0.9rem;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+      --font: "Inter", "Geist", "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.45;
+    }
+
+    body {
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: -2;
+      width: 32rem;
+      height: 32rem;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.26;
+      pointer-events: none;
+    }
+
+    body::before {
+      background: var(--emerald);
+      top: -11rem;
+      left: -10rem;
+    }
+
+    body::after {
+      background: var(--blue);
+      right: -11rem;
+      bottom: -13rem;
+    }
+
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 26px 26px;
+      mask-image: radial-gradient(circle at 50% 30%, black 10%, transparent 75%);
+      pointer-events: none;
+    }
+
+    .container {
+      width: min(1120px, 92vw);
+      margin-inline: auto;
+    }
+
+    .section {
+      padding-block: clamp(2.4rem, 6vw, 5rem);
+    }
+
+    .eyebrow {
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.74rem;
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: 1.2rem;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      font-size: 0.95rem;
+    }
+
+    .logo-mark {
+      width: 0.72rem;
+      height: 0.72rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--emerald), var(--blue));
+      box-shadow: 0 0 18px rgba(31, 208, 143, 0.55);
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 0.68rem 1.1rem;
+      cursor: pointer;
+      transition: transform 150ms ease, border-color 200ms ease, background 200ms ease;
+      color: var(--text);
+      background: transparent;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      border-color: rgba(43, 141, 255, 0.5);
+      background: rgba(43, 141, 255, 0.08);
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(43, 141, 255, 0.9);
+      background: rgba(43, 141, 255, 0.14);
+    }
+
+    .hero {
+      text-align: center;
+      display: grid;
+      gap: 1.2rem;
+      justify-items: center;
+      animation: rise 560ms ease forwards;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 6vw, 4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.07;
+      max-width: 16ch;
+    }
+
+    .subhead {
+      margin: 0;
+      color: var(--muted);
+      max-width: 70ch;
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+    }
+
+    .waitlist-card {
+      width: min(640px, 100%);
+      margin-top: 1rem;
+      padding: 1.1rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: linear-gradient(160deg, rgba(16, 20, 24, 0.94), rgba(19, 25, 33, 0.9));
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 0.8rem;
+      animation: rise 680ms ease forwards;
+    }
+
+    .segment {
+      border-radius: 999px;
+      border: 1px solid #2f3e52;
+      padding: 0.25rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: rgba(7, 10, 14, 0.6);
+    }
+
+    .segment input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .segment label {
+      text-align: center;
+      padding: 0.5rem 0.4rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.86rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 180ms ease, background 180ms ease;
+    }
+
+    #buyer:checked + label,
+    #seller:checked + label {
+      color: var(--text);
+      background: linear-gradient(135deg, rgba(31, 208, 143, 0.24), rgba(43, 141, 255, 0.3));
+      box-shadow: inset 0 0 0 1px rgba(242, 246, 251, 0.14);
+    }
+
+    .waitlist-form {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .waitlist-form input {
+      width: 100%;
+      padding: 0.95rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid #34465d;
+      background: #0d1218;
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .waitlist-form input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(43, 141, 255, 0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--emerald), var(--blue));
+      color: #041018;
+      border: 0;
+      padding: 0.95rem 1.1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.94rem;
+      font-weight: 800;
+    }
+
+    .form-note {
+      margin: 0.1rem 0 0;
+      font-size: 0.82rem;
+      color: #87a1bd;
+    }
+
+    .proof-wrap {
+      display: grid;
+      gap: 1.1rem;
+      align-items: start;
+    }
+
+    .proof-title {
+      margin: 0;
+      font-size: clamp(1.5rem, 3.4vw, 2.25rem);
+      letter-spacing: -0.02em;
+    }
+
+    .slip-card {
+      border-radius: 1.3rem;
+      border: 1px solid #2b3a4d;
+      background: linear-gradient(180deg, rgba(15, 22, 31, 0.96), rgba(12, 17, 24, 0.94));
+      padding: 1rem;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+      position: relative;
+      overflow: hidden;
+      animation: rise 800ms ease forwards;
+    }
+
+    .slip-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(140deg, rgba(31, 208, 143, 0.12), transparent 35%, rgba(43, 141, 255, 0.14));
+      mix-blend-mode: screen;
+    }
+
+    .slip-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.7rem;
+      margin-bottom: 1rem;
+    }
+
+    .slip-title {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 760;
+    }
+
+    .slip-meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      font-size: 0.75rem;
+      border: 1px solid #32465f;
+      border-radius: 999px;
+      padding: 0.28rem 0.6rem;
+      color: #b6c6d7;
+      background: rgba(9, 13, 18, 0.75);
+    }
+
+    .chip-odds {
+      border-color: rgba(31, 208, 143, 0.5);
+      color: #9ef0cd;
+      background: rgba(17, 56, 43, 0.35);
+    }
+
+    .match-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .match-row {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 0.7rem;
+      align-items: center;
+      border: 1px solid #29394d;
+      border-radius: 0.95rem;
+      padding: 0.72rem 0.78rem;
+      background: rgba(6, 10, 14, 0.7);
+    }
+
+    .teams {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 620;
+      letter-spacing: 0.01em;
+    }
+
+    .market {
+      margin: 0.2rem 0 0;
+      font-size: 0.76rem;
+      color: #8ea0b5;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .prediction-lock {
+      border: 1px solid #3b506b;
+      border-radius: 0.8rem;
+      padding: 0.48rem 0.6rem;
+      background: linear-gradient(145deg, rgba(18, 30, 45, 0.75), rgba(12, 16, 20, 0.86));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .prediction-lock svg {
+      width: 0.9rem;
+      height: 0.9rem;
+      fill: #89c8ff;
+      flex-shrink: 0;
+      opacity: 0.8;
+    }
+
+    .blurred {
+      filter: blur(3px);
+      letter-spacing: 0.08em;
+      color: #d8e5f2;
+      user-select: none;
+    }
+
+    .tag-locked {
+      font-size: 0.67rem;
+      border: 1px solid rgba(43, 141, 255, 0.55);
+      border-radius: 999px;
+      padding: 0.18rem 0.45rem;
+      color: #8fd0ff;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(43, 141, 255, 0.12);
+    }
+
+    .reveal-note {
+      margin-top: 0.85rem;
+      margin-bottom: 0;
+      font-size: 0.83rem;
+      color: #97aec8;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .how-grid {
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    .step {
+      border: 1px solid #2b3a4e;
+      border-radius: 1rem;
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(13, 18, 24, 0.9), rgba(10, 13, 17, 0.92));
+    }
+
+    .step-id {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 50%;
+      font-size: 0.8rem;
+      font-weight: 800;
+      margin-bottom: 0.65rem;
+      border: 1px solid transparent;
+    }
+
+    .step-id.one {
+      background: var(--blue-soft);
+      border-color: rgba(43, 141, 255, 0.6);
+      color: #8ec9ff;
+    }
+
+    .step-id.two {
+      background: #1d1a13;
+      border-color: #917739;
+      color: #e6cf96;
+    }
+
+    .step-id.three {
+      background: var(--emerald-soft);
+      border-color: rgba(31, 208, 143, 0.55);
+      color: #95f1ca;
+    }
+
+    h2,
+    h3 {
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .step h3 {
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .trust {
+      padding-top: 1rem;
+      padding-bottom: 3rem;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .trust-pill {
+      border-radius: 999px;
+      border: 1px solid #2f4158;
+      background: rgba(13, 19, 26, 0.82);
+      color: #b8c7d7;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-weight: 680;
+    }
+
+    .trust-pill strong {
+      color: #dff3ff;
+      font-weight: 780;
+    }
+
+    .footer {
+      border-top: 1px solid #1f2a38;
+      padding-block: 1.5rem 2rem;
+      color: #8396ab;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (min-width: 700px) {
+      .waitlist-form {
+        grid-template-columns: 1.3fr auto;
+      }
+
+      .waitlist-form .btn-primary {
+        min-width: 11.8rem;
+      }
+
+      .proof-wrap {
+        grid-template-columns: 1.05fr 1fr;
+        gap: 1.4rem;
+      }
+
+      .slip-card {
+        padding: 1.25rem;
+      }
+
+      .how-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .step {
+        min-height: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <header class="container header">
+    <div class="logo" aria-label="BETGRID">
+      <span class="logo-mark" aria-hidden="true"></span>
+      BETGRID
+    </div>
+    <button class="btn btn-outline" type="button">Pro Tipster?</button>
+  </header>
+
+  <main>
+    <section class="container section hero">
+      <p class="eyebrow">Private Beta • EPL Season</p>
+      <h1>Invest in Winning Slips.</h1>
+      <p class="subhead">
+        The marketplace where results are verified by data, and buyers only pay when the tipster wins.
+        Join the private beta for the upcoming EPL season.
+      </p>
+
+      <div class="waitlist-card" aria-label="Waitlist Form">
+        <div class="segment" role="radiogroup" aria-label="Choose waitlist type">
+          <input type="radio" id="buyer" name="waitlist-type" value="buyer" checked>
+          <label for="buyer">Buyer</label>
+          <input type="radio" id="seller" name="waitlist-type" value="seller">
+          <label for="seller">Seller</label>
+        </div>
+
+        <form class="waitlist-form" action="#" method="post">
+          <input id="email" type="email" name="email" placeholder="you@company.com" autocomplete="email" required>
+          <button id="submitBtn" class="btn btn-primary" type="submit">Join Buyer Waitlist</button>
+        </form>
+        <p id="waitlistNote" class="form-note">Buyers pay only when the selected slip wins.</p>
+      </div>
+    </section>
+
+    <section class="container section">
+      <div class="proof-wrap">
+        <div>
+          <p class="eyebrow">Live Proof</p>
+          <h2 class="proof-title">Performance-backed slips with locked picks until purchase.</h2>
+          <p class="subhead">
+            Every pick outcome is validated by match data, keeping performance transparent for buyers and fair for tipsters.
+          </p>
+        </div>
+
+        <article class="slip-card" aria-label="EPL Weekend Accumulator slip">
+          <div class="slip-top">
+            <h3 class="slip-title">EPL Weekend Accumulator</h3>
+            <div class="slip-meta">
+              <span class="chip">5 Matches</span>
+              <span class="chip chip-odds">Total Odds: 18.40</span>
+            </div>
+          </div>
+
+          <ul class="match-list">
+            <li class="match-row">
+              <div>
+                <p class="teams">Liverpool vs Man Utd</p>
+                <p class="market">1X2 Market</p>
+              </div>
+              <div class="prediction-lock" aria-label="Prediction locked">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
+                </svg>
+                <span class="blurred">HOME WIN</span>
+                <span class="tag-locked">Locked</span>
+              </div>
+            </li>
+
+            <li class="match-row">
+              <div>
+                <p class="teams">Arsenal vs Aston Villa</p>
+                <p class="market">Over/Under</p>
+              </div>
+              <div class="prediction-lock" aria-label="Prediction locked">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
+                </svg>
+                <span class="blurred">OVER 2.5</span>
+                <span class="tag-locked">Locked</span>
+              </div>
+            </li>
+
+            <li class="match-row">
+              <div>
+                <p class="teams">Chelsea vs Newcastle</p>
+                <p class="market">Double Chance</p>
+              </div>
+              <div class="prediction-lock" aria-label="Prediction locked">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
+                </svg>
+                <span class="blurred">X2</span>
+                <span class="tag-locked">Locked</span>
+              </div>
+            </li>
+          </ul>
+
+          <p class="reveal-note">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="#7fc4ff" aria-hidden="true">
+              <path d="M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1Zm0 7a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 12 8Zm2 8h-4a1 1 0 0 1 0-2h1v-2h-1a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v3h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            Reveals automatically upon purchase.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container section">
+      <p class="eyebrow">How It Works</p>
+      <div class="how-grid">
+        <article class="step">
+          <span class="step-id one">1</span>
+          <h3>Discover</h3>
+          <p>Browse verified tipsters ranked by ROI, win rate, and recent EPL performance.</p>
+        </article>
+
+        <article class="step">
+          <span class="step-id two">2</span>
+          <h3>Purchase</h3>
+          <p>Buy access to a locked slip. Your payment stays protected in escrow until settlement.</p>
+        </article>
+
+        <article class="step">
+          <span class="step-id three">3</span>
+          <h3>Payout</h3>
+          <p>If the slip wins, tipster payout is released. If it loses, you receive a full refund.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container trust" aria-label="Trust Indicators">
+      <div class="trust-badges">
+        <span class="trust-pill"><strong>100%</strong> API-Verified Results</span>
+        <span class="trust-pill">EPL Matches Only</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">BETGRID • Data-verified tipster marketplace for disciplined football buyers.</footer>
+
+  <script>
+    const buyerRadio = document.getElementById('buyer');
+    const sellerRadio = document.getElementById('seller');
+    const submitBtn = document.getElementById('submitBtn');
+    const waitlistNote = document.getElementById('waitlistNote');
+
+    function syncWaitlistState() {
+      if (sellerRadio.checked) {
+        submitBtn.textContent = 'Apply as Tipster';
+        waitlistNote.textContent = 'Seller applications are reviewed with ROI and proof-of-results checks.';
+      } else {
+        submitBtn.textContent = 'Join Buyer Waitlist';
+        waitlistNote.textContent = 'Buyers pay only when the selected slip wins.';
+      }
+    }
+
+    buyerRadio.addEventListener('change', syncWaitlistState);
+    sellerRadio.addEventListener('change', syncWaitlistState);
+    syncWaitlistState();
+  </script>
+</body>
+</html>
