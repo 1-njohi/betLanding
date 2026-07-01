@@ -36,6 +36,36 @@
         },
       };
     </script>
+    <script>
+      function switchProfileMode(mode) {
+        const btnTipster = document.getElementById("toggleTipster");
+        const btnBuyer = document.getElementById("toggleBuyer");
+        const msgTipster = document.getElementById("msgTipster");
+        const msgBuyer = document.getElementById("msgBuyer");
+
+        if (mode === "tipster") {
+          // Update Buttons
+          btnTipster.className =
+            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 bg-cyber-sky text-cyber-canvas";
+          btnBuyer.className =
+            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 text-cyber-slateDim hover:text-white";
+
+          // Update Panes
+          msgTipster.classList.replace("hidden", "block");
+          msgBuyer.classList.replace("block", "hidden");
+        } else {
+          // Update Buttons
+          btnTipster.className =
+            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 text-cyber-slateDim hover:text-white";
+          btnBuyer.className =
+            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 bg-cyber-sky text-cyber-canvas";
+
+          // Update Panes
+          msgTipster.classList.replace("block", "hidden");
+          msgBuyer.classList.replace("hidden", "block");
+        }
+      }
+    </script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght=900&family=Orbitron:wght=700;900&display=swap");
       html {
@@ -113,21 +143,58 @@
 
       <!-- System Core Title Heading -->
       <h1
-        class="cyber-font text-4xl md:text-5xl font-black tracking-tight text-white uppercase max-w-3xl leading-none"
+        class="cyber-font text-4xl md:text-5xl font-black tracking-tight text-white uppercase max-w-3xl leading-tight"
       >
-        The Ultimate Marketplace for
+        Total Transparency for <br class="hidden md:block" />
         <span
           class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-sky to-cyber-emerald"
-          >Verified Slips</span
+          >Verified Betting Slips</span
         >
       </h1>
 
-      <p
-        class="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-cyber-slateDim"
+      <!-- PROFILE MODE CHANGER (TOGGLE) -->
+      <div
+        class="mt-6 inline-flex p-1 bg-cyber-card border border-cyber-border rounded-md relative z-20"
       >
-        An uncompromising, high-frequency dashboard designed specifically for
-        elite tipsters and high-stakes buyers. Zero unverified records. Complete
-        algorithmic transparency for the absolute 2026/27 layout.
+        <button
+          id="toggleTipster"
+          onclick="switchProfileMode('tipster')"
+          type="button"
+          class="px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 bg-cyber-sky text-cyber-canvas"
+        >
+          [EDITOR / TIPSTER]
+        </button>
+        <button
+          id="toggleBuyer"
+          onclick="switchProfileMode('buyer')"
+          type="button"
+          class="px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 text-cyber-slateDim hover:text-white"
+        >
+          [PIRATE / BUYER]
+        </button>
+      </div>
+
+      <!-- CONDITIONALLY RENDERED MESSAGES -->
+      <!-- Tipster View Pane -->
+      <p
+        id="msgTipster"
+        class="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-cyber-slateDim block"
+      >
+        You can create betslips and set your selling price. Buyers purchase your
+        slip access, but the capital is locked and released to you only after
+        your selections win. Otherwise, the buyer is fully refunded
+        automatically.
+      </p>
+
+      <!-- Buyer View Pane -->
+      <p
+        id="msgBuyer"
+        class="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-cyber-slateDim hidden"
+      >
+        Browse the marketplace pool, verify authentic tipster performance
+        curves, and instantly unlock code selections via secure platform
+        margins. If the ticket drops, your access escrow fee is automatically
+        returned to your wallet.
       </p>
 
       <!-- "HOW IT WORKS" CORE PANEL PIPELINE -->
