@@ -328,7 +328,7 @@
               id="submitBtn"
               class="w-full bg-cyber-sky hover:bg-cyber-sky/90 text-cyber-canvas text-[11px] font-black tracking-widest py-2 rounded uppercase transition-colors"
             >
-              REQUEST ACCESS KEY
+              REQUEST EARLY ACCESS
             </button>
           </form>
 
@@ -336,7 +336,10 @@
             id="formSuccess"
             class="hidden mt-3 text-center text-[10px] text-cyber-emerald font-black uppercase tracking-wider"
           >
-            ✓ TARGET RECORD SAVED TO DATABASE
+            Congratulations, You have been aded to the waitlist. You will be
+            among the first to be added into the system as soon as the new
+            season begins. If you haven't yet, join our WhatsApp Channel for
+            frequent updates!
           </div>
 
           <div
@@ -344,13 +347,6 @@
             class="hidden mt-3 text-center text-[10px] text-cyber-red font-black uppercase tracking-wider"
           >
             ✗ ERROR SAVING RECORD. PLEASE TRY AGAIN.
-          </div>
-
-          <div
-            id="formSuccess"
-            class="hidden mt-3 text-center text-[10px] text-cyber-emerald font-black uppercase tracking-wider"
-          >
-            TARGET RECORD SAVED TO DATABASE
           </div>
         </div>
 
@@ -476,7 +472,7 @@
 
             // Show success (note: no-cors means we can't read the response)
             successDiv.classList.remove("hidden");
-            successDiv.textContent = "✓ TARGET RECORD SAVED TO DATABASE";
+            // successDiv.textContent = "✓ TARGET RECORD SAVED TO DATABASE";
 
             // Clear the input
             inputField.value = "";
