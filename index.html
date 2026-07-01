@@ -1,896 +1,498 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Betslip Pirates | Tipster Marketplace</title>
-  <style>
-    :root {
-      --bg: #07090d;
-      --bg-soft: #0d1118;
-      --surface: #121722;
-      --surface-2: #151b27;
-      --line: #212a3a;
-      --line-soft: #1a2230;
-      --text: #f5f7fc;
-      --muted: #8b93a7;
-      --muted-2: #687189;
-      --emerald: #16d189;
-      --emerald-soft: #0f2f26;
-      --blue: #2d82ff;
-      --blue-soft: #11213f;
-      --radius-xl: 1.2rem;
-      --radius-lg: 1rem;
-      --radius-md: 0.72rem;
-      --shadow-card: 0 16px 48px rgba(0, 0, 0, 0.42);
-      --font: "Inter", "Geist", "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
-      line-height: 1.5;
-    }
-
-    body {
-      position: relative;
-      overflow-x: hidden;
-      /* background-image: radial-gradient(100% 55% at 15% -10%, rgba(45, 130, 255, 0.16), transparent 60%), */
-                        /* radial-gradient(70% 55% at 85% 18%, rgba(22, 209, 137, 0.1), transparent 65%); */
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-      background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 28px 28px;
-      mask-image: linear-gradient(180deg, black 0%, rgba(0, 0, 0, 0.55) 60%, transparent 100%);
-    }
-
-    .container {
-      width: min(1120px, 92vw);
-      margin-inline: auto;
-    }
-
-    .topbar {
-      border-bottom: 1px solid var(--line-soft);
-      background: rgba(7, 9, 13, 0.82);
-      backdrop-filter: blur(6px);
-    }
-
-    .topbar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      padding-block: 0.85rem;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.65rem;
-      font-size: 1.48rem;
-      font-weight: 780;
-      letter-spacing: -0.03em;
-    }
-
-    .brand-mark {
-      width: 1.78rem;
-      height: 1.78rem;
-      border-radius: 0.35rem;
-      display: grid;
-      place-items: center;
-      font-size: 0.92rem;
-      font-weight: 900;
-      color: #dfeaff;
-      background: linear-gradient(135deg, #1666f5, #2d82ff);
-      box-shadow: 0 7px 20px rgba(45, 130, 255, 0.35);
-      flex-shrink: 0;
-    }
-
-    .brand-text {
-      font-size: 1.35rem;
-      font-weight: 730;
-      letter-spacing: -0.035em;
-    }
-
-    .btn {
-      appearance: none;
-      border: 0;
-      border-radius: 0.5rem;
-      font-weight: 770;
-      font-size: 0.82rem;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: transform 160ms ease, box-shadow 200ms ease, opacity 200ms ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-light {
-      background: #f4f6fb;
-      color: #121621;
-      padding: 0.66rem 0.92rem;
-    }
-
-    .hero {
-      padding-top: 2.5rem;
-      padding-bottom: 2.2rem;
-    }
-
-    .hero-wrap {
-      max-width: 690px;
-    }
-
-    .beta-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      border: 1px solid #1f3968;
-      border-radius: 999px;
-      background: rgba(15, 28, 52, 0.65);
-      padding: 0.35rem 0.78rem;
-      color: #64a8ff;
-      font-size: 0.82rem;
-      font-weight: 640;
-    }
-
-    .beta-dot {
-      width: 0.42rem;
-      height: 0.42rem;
-      border-radius: 50%;
-      background: #2d82ff;
-      box-shadow: 0 0 12px rgba(45, 130, 255, 0.6);
-    }
-
-    h1 {
-      margin: 1rem 0 0;
-      line-height: 0.97;
-      letter-spacing: -0.05em;
-      font-size: clamp(2.4rem, 10.8vw, 5.2rem);
-    }
-
-    .title-strong {
-      display: block;
-      color: #f5f8ff;
-    }
-
-    .title-soft {
-      display: block;
-      color: #6f7486;
-    }
-
-    .lead {
-      margin: 1.1rem 0 0;
-      color: var(--muted);
-      font-size: clamp(1.02rem, 3.8vw, 1.34rem);
-    }
-
-    .waitlist {
-      margin-top: 1.5rem;
-      display: grid;
-      gap: 0.85rem;
-      max-width: 650px;
-    }
-
-    .segmented {
-      display: inline-grid;
-      grid-template-columns: 1fr 1fr;
-      border: 1px solid #293447;
-      border-radius: 0.63rem;
-      padding: 0.2rem;
-      background: #121722;
-      width: min(290px, 100%);
-    }
-
-    .segmented input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .segmented label {
-      text-align: center;
-      border-radius: 0.45rem;
-      padding: 0.45rem 0.75rem;
-      font-size: 0.82rem;
-      font-weight: 720;
-      text-transform: uppercase;
-      color: #6d7589;
-      cursor: pointer;
-      transition: background 160ms ease, color 160ms ease;
-    }
-
-    #buyer:checked + label,
-    #seller:checked + label {
-      color: #f5f7ff;
-      background: linear-gradient(180deg, #2a313f 0%, #1f2531 100%);
-    }
-
-    .waitlist-form {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.6rem;
-      border: 1px solid #232f42;
-      border-radius: 0.75rem;
-      background: linear-gradient(140deg, #121722, #161c28);
-      padding: 0.45rem;
-      box-shadow: var(--shadow-card);
-    }
-
-    .waitlist-form input {
-      width: 100%;
-      border: 0;
-      outline: none;
-      border-radius: 0.58rem;
-      padding: 0.9rem 0.82rem;
-      color: #f3f7ff;
-      font-size: 0.95rem;
-      background: transparent;
-    }
-
-    .waitlist-form input::placeholder {
-      color: #77819a;
-    }
-
-    .btn-cta {
-      border-radius: 0.58rem;
-      padding: 0.82rem 1.1rem;
-      min-width: 6.9rem;
-      text-transform: none;
-      letter-spacing: -0.01em;
-      font-size: 0.98rem;
-      color: #f4f8ff;
-      background: linear-gradient(135deg, #1b6cff, #2d82ff);
-      box-shadow: 0 6px 18px rgba(38, 113, 241, 0.4);
-    }
-
-    .queue {
-      margin: 0.2rem 0 0;
-      color: #566079;
-      font-size: 0.74rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-weight: 660;
-    }
-
-    .proof {
-      padding-top: 1.9rem;
-      padding-bottom: 2.35rem;
-    }
-
-    .slip {
-      position: relative;
-      border: 1px solid #283245;
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      background: linear-gradient(180deg, #151c28 0%, #111722 70%, #0b1019 100%);
-      box-shadow: var(--shadow-card);
-      max-width: 760px;
-    }
-
-    .slip-header {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.6rem;
-      align-items: start;
-      padding: 1rem;
-      border-bottom: 1px solid #253044;
-    }
-
-    .slip-title {
-      margin: 0;
-      font-size: clamp(1.2rem, 4.8vw, 1.72rem);
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-    }
-
-    .slip-sub {
-      margin: 0.28rem 0 0;
-      font-size: 0.8rem;
-      color: #8290ab;
-      text-transform: uppercase;
-      letter-spacing: 0.11em;
-    }
-
-    .slip-meta {
-      text-align: right;
-    }
-
-    .odds {
-      margin: 0;
-      font-size: clamp(1.52rem, 4.8vw, 2.24rem);
-      font-weight: 830;
-      letter-spacing: -0.04em;
-      color: var(--emerald);
-      text-shadow: 0 0 24px rgba(22, 209, 137, 0.15);
-    }
-
-    .odds-label {
-      margin: 0.2rem 0 0;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      color: #6a7894;
-      text-transform: uppercase;
-      font-weight: 680;
-    }
-
-    .match-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .match {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.6rem;
-      align-items: center;
-      padding: 0.9rem 1rem;
-      border-bottom: 1px solid #1f2938;
-    }
-
-    .match:last-child {
-      border-bottom: 0;
-    }
-
-    .kickoff {
-      margin: 0;
-      color: #6f7c98;
-      font-size: 0.79rem;
-    }
-
-    .fixture {
-      margin: 0.2rem 0 0;
-      font-size: 0.98rem;
-      font-weight: 640;
-      letter-spacing: -0.01em;
-    }
-
-    .locked {
-      position: relative;
-      min-width: 7.8rem;
-      border-radius: 0.45rem;
-      border: 1px solid #2f3f55;
-      background: linear-gradient(135deg, #1b2536, #141b28);
-      color: #e8f0ff;
-      padding: 0.54rem 0.7rem;
-      font-size: 0.83rem;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.36rem;
-      overflow: hidden;
-    }
-
-    .locked-text {
-      filter: blur(3px);
-      letter-spacing: 0.08em;
-      user-select: none;
-    }
-
-    .locked svg {
-      width: 0.88rem;
-      height: 0.88rem;
-      fill: #93c3ff;
-      opacity: 0.78;
-      flex-shrink: 0;
-    }
-
-    .slip-footer {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.6rem;
-      align-items: center;
-      padding: 0.95rem 1rem;
-      background: rgba(9, 13, 20, 0.85);
-      border-top: 1px solid #202a3a;
-    }
-
-    .win-row {
-      margin: 0;
-      color: #6d7893;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 650;
-    }
-
-    .reveal {
-      border: 0;
-      border-radius: 0.58rem;
-      background: #f8fafc;
-      color: #131823;
-      padding: 0.75rem 1rem;
-      font-size: 0.84rem;
-      font-weight: 850;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-
-    .reveal-note {
-      margin: 0.55rem 0 0;
-      color: #8491ab;
-      font-size: 0.82rem;
-    }
-
-    .escrow-pill {
-      position: absolute;
-      left: 0.72rem;
-      bottom: -1.12rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.62rem;
-      border: 1px solid #2b3546;
-      border-radius: 0.9rem;
-      padding: 0.74rem 0.84rem;
-      background: #161d2a;
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
-      min-width: 15.3rem;
-    }
-
-    .escrow-icon {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: rgba(22, 209, 137, 0.2);
-      border: 1px solid rgba(22, 209, 137, 0.45);
-      color: #3ce4a5;
-      font-size: 1rem;
-      font-weight: 900;
-      flex-shrink: 0;
-    }
-
-    .escrow-title {
-      margin: 0;
-      font-size: 0.92rem;
-      font-weight: 720;
-      letter-spacing: -0.01em;
-    }
-
-    .escrow-copy {
-      margin: 0.12rem 0 0;
-      font-size: 0.76rem;
-      color: #73819d;
-    }
-
-    .protocol {
-      padding-top: 4.6rem;
-      padding-bottom: 2.2rem;
-      border-top: 1px solid #171f2d;
-    }
-
-    .section-title {
-      margin: 0;
-      font-size: clamp(1.85rem, 7vw, 3.2rem);
-      letter-spacing: -0.04em;
-      line-height: 1.04;
-    }
-
-    .section-copy {
-      margin: 0.85rem 0 0;
-      color: var(--muted);
-      max-width: 64ch;
-      font-size: clamp(0.98rem, 3.5vw, 1.2rem);
-    }
-
-    .protocol-list {
-      margin-top: 2rem;
-      display: grid;
-      gap: 1.35rem;
-    }
-
-    .protocol-item {
-      border-bottom: 1px solid #161f2d;
-      padding-bottom: 1.1rem;
-    }
-
-    .protocol-item:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .step-code {
-      margin: 0;
-      color: var(--blue);
-      font-size: 0.84rem;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-      font-weight: 760;
-    }
-
-    .protocol-item h3 {
-      margin: 0.42rem 0 0;
-      font-size: clamp(1.36rem, 5vw, 2rem);
-      letter-spacing: -0.02em;
-      line-height: 1.12;
-    }
-
-    .protocol-item p {
-      margin: 0.62rem 0 0;
-      color: var(--muted);
-      max-width: 62ch;
-      font-size: clamp(0.96rem, 3.4vw, 1.12rem);
-    }
-
-    .trust {
-      padding-top: 1rem;
-      padding-bottom: 2.9rem;
-    }
-
-    .trust-card {
-      border: 1px solid #1f2b3f;
-      border-radius: var(--radius-xl);
-      background: linear-gradient(170deg, rgba(18, 24, 35, 0.88), rgba(11, 15, 23, 0.92));
-      box-shadow: var(--shadow-card);
-      padding: 1rem;
-      display: grid;
-      gap: 0.7rem;
-    }
-
-    .trust-row {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 0.72rem;
-      align-items: center;
-      border: 1px solid #1e293b;
-      border-radius: 0.72rem;
-      padding: 0.72rem;
-      background: rgba(13, 18, 28, 0.82);
-    }
-
-    .trust-icon {
-      width: 2.02rem;
-      height: 2.02rem;
-      border-radius: 0.52rem;
-      display: grid;
-      place-items: center;
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: #dbedff;
-    }
-
-    .trust-icon.blue {
-      background: #112544;
-      color: #7ab8ff;
-    }
-
-    .trust-icon.green {
-      background: #0f3228;
-      color: #54e2ac;
-    }
-
-    .trust-icon.purple {
-      background: #2b1644;
-      color: #c99bff;
-    }
-
-    .trust-row h4 {
-      margin: 0;
-      font-size: 0.95rem;
-      letter-spacing: -0.01em;
-    }
-
-    .trust-row p {
-      margin: 0.1rem 0 0;
-      color: #7783a0;
-      font-size: 0.82rem;
-    }
-
-    .trust-tags {
-      margin-top: 0.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-    }
-
-    .trust-tag {
-      border: 1px solid #2e3c52;
-      border-radius: 999px;
-      padding: 0.35rem 0.62rem;
-      background: rgba(11, 16, 24, 0.82);
-      color: #95a5c0;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      font-weight: 690;
-    }
-
-    .trust-tag strong {
-      color: #d9ebff;
-    }
-
-    .footer {
-      border-top: 1px solid #151d2a;
-      text-align: center;
-      color: #546078;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 650;
-      padding: 1.25rem 0 1.7rem;
-    }
-
-    @media (max-width: 460px) {
-      .brand-text {
-        font-size: 1.1rem;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Betslip Pirates — System Launching for the 2026/27 Season</title>
+    <meta
+      name="google-sheets-url"
+      content="https://script.google.com/macros/s/AKfycbxslGhGY6WqjmYmT9MRtdgU8D6YJWUrw_WFHuwgf2KEl5yZMD-O3FkVi4td8ZfjB7evGg/exec"
+    />
+    <!-- Tailwind CSS Engine CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              cyber: {
+                canvas: "#0b0f19",
+                card: "#161c2a",
+                popover: "#1c2436",
+                border: "#232d42",
+                sky: "#0ea5e9",
+                emerald: "#10b981",
+                amber: "#f59e0b",
+                slateDim: "#64748b",
+              },
+            },
+            fontFamily: {
+              mono: [
+                "ui-monospace",
+                "SFMono-Regular",
+                "Menlo",
+                "Monaco",
+                "Consolas",
+                "monospace",
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <script>
+      function switchProfileMode(mode) {
+        const btnTipster = document.getElementById("toggleTipster");
+        const btnBuyer = document.getElementById("toggleBuyer");
+        const msgTipster = document.getElementById("msgTipster");
+        const msgBuyer = document.getElementById("msgBuyer");
+
+        if (mode === "tipster") {
+          // Update Buttons
+          btnTipster.className =
+            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 bg-cyber-sky text-cyber-canvas";
+          btnBuyer.className =
+            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 text-cyber-slateDim hover:text-white";
+
+          // Update Panes
+          msgTipster.classList.replace("hidden", "block");
+          msgBuyer.classList.replace("block", "hidden");
+        } else {
+          // Update Buttons
+          btnTipster.className =
+            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 text-cyber-slateDim hover:text-white";
+          btnBuyer.className =
+            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 bg-cyber-sky text-cyber-canvas";
+
+          // Update Panes
+          msgTipster.classList.replace("block", "hidden");
+          msgBuyer.classList.replace("hidden", "block");
+        }
       }
-
-      .btn-light {
-        padding-inline: 0.76rem;
-        font-size: 0.74rem;
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght=900&family=Orbitron:wght=700;900&display=swap");
+      html {
+        scroll-behavior: smooth;
       }
-
-      .waitlist-form {
-        grid-template-columns: 1fr;
+      .brand-font {
+        font-family: "League Spartan", sans-serif;
       }
-
-      .btn-cta {
-        width: 100%;
+      .cyber-font {
+        font-family: "Orbitron", sans-serif;
       }
-
-      .slip-footer {
-        grid-template-columns: 1fr;
+      .glow-sky {
+        box-shadow: 0 0 15px rgba(14, 165, 233, 0.15);
       }
-
-      .reveal {
-        width: 100%;
+      .glow-emerald {
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
       }
-    }
+    </style>
+  </head>
+  <body
+    class="bg-cyber-canvas text-slate-200 font-mono min-h-screen flex flex-col justify-between antialiased selection:bg-cyber-sky/30 selection:text-white"
+  >
+    <!-- Decorative Top Grid Matrix Glow -->
+    <div
+      class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[350px] bg-gradient-to-b from-cyber-sky/5 via-transparent to-transparent pointer-events-none z-0 border-t border-cyber-sky/10"
+    ></div>
 
-    @media (min-width: 820px) {
-      .hero {
-        padding-top: 3.35rem;
-      }
-
-      .hero-wrap {
-        max-width: 780px;
-      }
-
-      .proof {
-        padding-top: 2.4rem;
-      }
-
-      .protocol-list {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
-      }
-
-      .protocol-item {
-        border: 1px solid #1a2434;
-        border-radius: var(--radius-lg);
-        padding: 1rem;
-        min-height: 100%;
-        background: linear-gradient(180deg, rgba(15, 21, 31, 0.86), rgba(10, 14, 22, 0.9));
-      }
-
-      .trust-card {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-  </style>
-</head>
-<body>
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand" aria-label="Betslip Pirates">
-        <span class="brand-mark" aria-hidden="true">B</span>
-        <span class="brand-text">Betslip Pirates</span>
+    <!-- MAIN HEADER CONTROL DECK -->
+    <header
+      class="w-full max-w-6xl mx-auto px-4 py-6 flex justify-between items-center relative z-10"
+    >
+      <!-- BRAND LOGO AREA -->
+      <div class="flex items-center space-x-3">
+        <img
+          src="./img/logo.png"
+          alt="Betslip Pirates Logo"
+          class="pointer-events-none h-10 w-auto object-contain select-none drop-shadow-[0_0_8px_rgba(14,165,233,0.3)]"
+        />
+        <span
+          class="brand-font text-lg tracking-[0.25em] text-slate-100 uppercase select-none hidden sm:block"
+        >
+          BETSLIP PIRATES
+        </span>
       </div>
-      <button class="btn btn-light" type="button">Pro Tipster?</button>
-    </div>
-  </header>
-
-  <main>
-    <section class="container hero">
-      <div class="hero-wrap">
-        <p class="beta-badge"><span class="beta-dot" aria-hidden="true"></span>2026/2027 Season Private Beta</p>
-
-        <h1>
-          <span class="title-strong">Invest in</span>
-          <span class="title-soft">Winning Slips.</span>
-        </h1>
-
-        <p class="lead">
-          The marketplace where results are verified by data, and buyers only pay when the tipster wins.
-          Join the waitlist for the upcoming EPL season.
-        </p>
-
-        <section class="waitlist" aria-label="Waitlist Signup">
-          <div class="segmented" role="radiogroup" aria-label="Audience Segment">
-            <input type="radio" id="buyer" name="audience" checked>
-            <label for="buyer">Buyer</label>
-            <input type="radio" id="seller" name="audience">
-            <label for="seller">Tipster</label>
-          </div>
-
-          <form class="waitlist-form" action="#" method="post">
-            <input id="email" type="email" name="email" placeholder="Email address" autocomplete="email" required>
-            <button id="joinBtn" class="btn btn-cta" type="submit">Join List</button>
-          </form>
-
-          <p id="queueText" class="queue">1,240+ users currently in queue</p>
-        </section>
+      <!-- STATUS BADGE -->
+      <div
+        class="flex items-center space-x-2 border border-cyber-border bg-cyber-card/50 px-3 py-1 rounded text-[10px] font-black tracking-wider text-cyber-emerald uppercase"
+      >
+        <span>● TARGET DEPLOYMENT: 2026/27 SEASON</span>
       </div>
-    </section>
+    </header>
 
-    <section class="container proof" aria-label="Live Proof Slip">
-      <article class="slip">
-        <div class="slip-header">
-          <div>
-            <h2 class="slip-title">EPL Weekend Accumulator</h2>
-            <p class="slip-sub">5 Matches • by Jared Kiptoo</p>
-          </div>
-          <div class="slip-meta">
-            <p class="odds">18.40</p>
-            <p class="odds-label">Total Odds</p>
-          </div>
-        </div>
+    <!-- HERO CONTENT CONTAINER -->
+    <main
+      class="w-full max-w-4xl mx-auto px-4 py-8 relative z-10 flex-1 flex flex-col justify-center items-center text-center"
+    >
+      <!-- System Core Title Heading -->
+      <h1
+        class="cyber-font text-4xl md:text-5xl mb-2 font-black tracking-tight text-white uppercase max-w-3xl leading-none"
+      >
+        BETSLIP-PIRATES
+      </h1>
+      <h1
+        class="cyber-font text-lg mb-6 md:text-5xl font-black tracking-tight text-white uppercase max-w-3xl leading-none"
+      >
+        No Win, No Pay!
+      </h1>
 
-        <ul class="match-list">
-          <li class="match">
-            <div>
-              <p class="kickoff">Saturday, 15:00 • 1X2</p>
-              <p class="fixture">Liverpool vs Man Utd</p>
-            </div>
-            <div class="locked" aria-label="Locked Prediction">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
-              </svg>
-              <span class="locked-text">HOME WIN</span>
-            </div>
-          </li>
+      <!-- Splash Sub-header Accent targeting 2026/27 -->
+      <div
+        class="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-sm border border-cyber-amber/20 bg-cyber-amber/10 text-[10px] font-black tracking-widest text-cyber-amber uppercase"
+      >
+        ⚡ TARGETING THE ONCOMING 2026/27 SEASON KICK-OFF
+      </div>
 
-          <li class="match">
-            <div>
-              <p class="kickoff">Sunday, 16:30 • Over/Under</p>
-              <p class="fixture">Arsenal vs Aston Villa</p>
-            </div>
-            <div class="locked" aria-label="Locked Prediction">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
-              </svg>
-              <span class="locked-text">OVER 2.5</span>
-            </div>
-          </li>
+      <!-- System Core Title Heading -->
+      <h1
+        class="cyber-font text-4xl md:text-5xl font-black tracking-tight text-white uppercase max-w-3xl leading-tight"
+      >
+        Total Transparency for <br class="hidden md:block" />
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-sky to-cyber-emerald"
+          >Verified Betting Slips</span
+        >
+      </h1>
 
-          <li class="match">
-            <div>
-              <p class="kickoff">Sunday, 17:30 • Double Chance</p>
-              <p class="fixture">Chelsea vs Newcastle</p>
-            </div>
-            <div class="locked" aria-label="Locked Prediction">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Z"/>
-              </svg>
-              <span class="locked-text">X2</span>
-            </div>
-          </li>
-        </ul>
+      <!-- PROFILE MODE CHANGER (TOGGLE) -->
+      <div
+        class="mt-6 inline-flex p-1 bg-cyber-card border border-cyber-border rounded-md relative z-20"
+      >
+        <button
+          id="toggleTipster"
+          onclick="switchProfileMode('tipster')"
+          type="button"
+          class="px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 bg-cyber-sky text-cyber-canvas"
+        >
+          [EDITOR / TIPSTER]
+        </button>
+        <button
+          id="toggleBuyer"
+          onclick="switchProfileMode('buyer')"
+          type="button"
+          class="px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 text-cyber-slateDim hover:text-white"
+        >
+          [PIRATE / BUYER]
+        </button>
+      </div>
 
-        <div class="slip-footer">
-          <div>
-            <p class="win-row">Win Rate • 78.4%</p>
-            <p class="reveal-note">Reveals automatically upon purchase.</p>
-          </div>
-          <button class="reveal" type="button">Pay $5.00 To Reveal</button>
-        </div>
-
-        <aside class="escrow-pill" aria-label="Escrow Active">
-          <div class="escrow-icon">✓</div>
-          <div>
-            <p class="escrow-title">Escrow Active</p>
-            <p class="escrow-copy">Payout only if all legs win.</p>
-          </div>
-        </aside>
-      </article>
-    </section>
-
-    <section class="container protocol" aria-label="How It Works">
-      <h2 class="section-title">The Protocol</h2>
-      <p class="section-copy">
-        We removed the risk from following tipsters. Our automated engine handles everything from odds
-        verification to instant refunds.
+      <!-- CONDITIONALLY RENDERED MESSAGES -->
+      <!-- Tipster View Pane -->
+      <p
+        id="msgTipster"
+        class="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-white block"
+      >
+        You can create betslips and set your selling price. Buyers purchase your
+        slip access, but the capital is locked and released to you only after
+        your selections win. Otherwise, the buyer is fully refunded
+        automatically.
       </p>
 
-      <div class="protocol-list">
-        <article class="protocol-item">
-          <p class="step-code">01 // Discover</p>
-          <h3>Browse Verified Talent</h3>
-          <p>Browse verified tipsters with high ROI and data-backed EPL performance pulled from official APIs.</p>
-        </article>
+      <!-- Buyer View Pane -->
+      <p
+        id="msgBuyer"
+        class="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-white hidden"
+      >
+        Browse the marketplace pool, verify authentic tipster performance
+        curves, and instantly unlock code selections via secure platform
+        margins. If the ticket drops, your access escrow fee is automatically
+        returned to your wallet.
+      </p>
 
-        <article class="protocol-item">
-          <p class="step-code">02 // Purchase</p>
-          <h3>Escrow-Backed Access</h3>
-          <p>Buy access to the slip and funds stay in escrow until the fixture set is settled.</p>
-        </article>
+      <a
+        href="#wishlistFormContainer"
+        class="text-cyber-sky hover:underline font-bold block mt-6 text-[25px]"
+      >
+        Join the waitlist
+      </a>
 
-        <article class="protocol-item">
-          <p class="step-code">03 // Payout</p>
-          <h3>Automatic Settlement</h3>
-          <p>If the slip wins, tipster payout is released. If it loses, you get a full refund automatically.</p>
-        </article>
-      </div>
-    </section>
+      <!-- "HOW IT WORKS" CORE PANEL PIPELINE -->
+      <div
+        class="mt-12 w-full max-w-3xl border border-cyber-border bg-cyber-card/30 rounded p-6 text-left backdrop-blur-sm"
+      >
+        <div
+          class="flex items-center gap-2 text-[10px] font-black tracking-wider text-cyber-sky uppercase mb-6"
+        >
+          <span>[ LAYER_02_ARCHITECTURE ]</span>
+          <div class="h-[1px] flex-1 bg-cyber-border/60"></div>
+          <span>HOW IT WORKS</span>
+        </div>
 
-    <section class="container trust" aria-label="Trust Indicators">
-      <div class="trust-card">
-        <article class="trust-row">
-          <div class="trust-icon blue">⌁</div>
-          <div>
-            <h4>Zero-Risk For Buyers</h4>
-            <p>Refunds are processed in real-time when a slip fails.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Step 1 -->
+          <div
+            class="space-y-2 border-l-2 border-cyber-border pl-4 transition-colors focus-within:border-cyber-sky"
+          >
+            <div class="text-xs font-black text-cyber-sky font-mono">
+              01 // TIPSTERS DEPOSIT SLIPS
+            </div>
+            <p class="text-[11px] text-cyber-slateDim leading-relaxed">
+              Tipsters lock in their betting codes directly onto the platform
+              before kick-off. No editing, no deletions.
+              <a
+                href="#wishlistFormContainer"
+                class="text-cyber-sky hover:underline font-bold block mt-1.5 text-[10px]"
+              >
+                Join the waitlist to become a tipster and sell your betslips
+              </a>
+            </p>
           </div>
-        </article>
 
-        <article class="trust-row">
-          <div class="trust-icon green">⚡</div>
-          <div>
-            <h4>API-Verified Data</h4>
-            <p>All outcomes are synced directly with EPL match feeds.</p>
+          <!-- Step 2 -->
+          <div class="space-y-2 border-l-2 border-cyber-border pl-4">
+            <div class="text-xs font-black text-cyber-amber font-mono">
+              02 // BUYERS UNLOCK CODES
+            </div>
+            <p class="text-[11px] text-cyber-slateDim leading-relaxed">
+              Buyers transparently browse through verified form history, win
+              rates, and streak data to securely unlock active ticket links
+              instantly.
+              <a
+                href="#wishlistFormContainer"
+                class="text-cyber-amber hover:underline font-bold block mt-1.5 text-[10px]"
+              >
+                Join the waitlist to track and buy top tipsters' betslips
+              </a>
+            </p>
           </div>
-        </article>
 
-        <article class="trust-row">
-          <div class="trust-icon purple">$</div>
-          <div>
-            <h4>Instant Payouts</h4>
-            <p>Tipster earnings are released right after final settlement.</p>
+          <!-- Step 3 -->
+          <div class="space-y-2 border-l-2 border-cyber-border pl-4">
+            <div class="text-xs font-black text-cyber-emerald font-mono">
+              03 // AUTOMATIC REVENUE SPLITS
+            </div>
+            <p class="text-[11px] text-cyber-slateDim leading-relaxed">
+              Once matching scores finalize, profits split directly via
+              automated systems. Zero manual validation waiting rooms.
+              Everything is handled programmatic.
+            </p>
           </div>
-        </article>
+        </div>
       </div>
 
-      <div class="trust-tags">
-        <span class="trust-tag"><strong>100%</strong> API-Verified Results</span>
-        <span class="trust-tag">EPL Matches Only</span>
+      <!-- TWO-COLUMN ACTIONS CONSOLE -->
+      <div class="mt-6 w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- TARGET CHANNEL 1: THE WISHLIST ACCESS BLOCK -->
+        <div
+          id="wishlistFormContainer"
+          class="bg-cyber-card border border-cyber-border rounded p-5 flex flex-col justify-between text-left glow-sky scroll-mt-6"
+        >
+          <div>
+            <div class="flex justify-between items-center">
+              <span
+                class="text-[10px] font-black tracking-wider text-cyber-sky uppercase"
+                >// PHASE_01</span
+              >
+              <span class="text-[9px] text-cyber-slateDim uppercase font-bold"
+                >Secure Access</span
+              >
+            </div>
+            <h3
+              class="text-sm font-black text-white uppercase mt-2 tracking-wide"
+            >
+              Join The Early Wishlist
+            </h3>
+            <p class="text-[11px] text-cyber-slateDim mt-1 leading-normal">
+              Be premium-notified the exact second the marketplace opens to lock
+              down early-bird platform margins for the 2026/27 campaign.
+            </p>
+          </div>
+
+          <!-- <form id="wishlistForm" class="mt-4 space-y-2">
+            <input
+              type="text"
+              required
+              placeholder="EMAIL OR PHONE NUMBER"
+              class="w-full bg-cyber-canvas border border-cyber-border rounded px-3 py-2 text-[11px] font-bold text-white placeholder:text-cyber-slateDim/50 uppercase tracking-wider focus:outline-none focus:border-cyber-sky focus:ring-1 focus:ring-cyber-sky transition-all"
+            />
+            <button
+              type="submit"
+              class="w-full bg-cyber-sky hover:bg-cyber-sky/90 text-cyber-canvas text-[11px] font-black tracking-widest py-2 rounded uppercase transition-colors"
+            >
+              REQUEST ACCESS KEY
+            </button>
+          </form> -->
+          <form id="wishlistForm" class="mt-4 space-y-2">
+            <input
+              type="text"
+              id="contactInput"
+              name="contact"
+              required
+              placeholder="EMAIL OR PHONE NUMBER"
+              class="w-full bg-cyber-canvas border border-cyber-border rounded px-3 py-2 text-[11px] font-bold text-white placeholder:text-cyber-slateDim/50 uppercase tracking-wider focus:outline-none focus:border-cyber-sky focus:ring-1 focus:ring-cyber-sky transition-all"
+            />
+            <button
+              type="submit"
+              id="submitBtn"
+              class="w-full bg-cyber-sky hover:bg-cyber-sky/90 text-cyber-canvas text-[11px] font-black tracking-widest py-2 rounded uppercase transition-colors"
+            >
+              REQUEST ACCESS KEY
+            </button>
+          </form>
+
+          <div
+            id="formSuccess"
+            class="hidden mt-3 text-center text-[10px] text-cyber-emerald font-black uppercase tracking-wider"
+          >
+            ✓ TARGET RECORD SAVED TO DATABASE
+          </div>
+
+          <div
+            id="formError"
+            class="hidden mt-3 text-center text-[10px] text-cyber-red font-black uppercase tracking-wider"
+          >
+            ✗ ERROR SAVING RECORD. PLEASE TRY AGAIN.
+          </div>
+
+          <div
+            id="formSuccess"
+            class="hidden mt-3 text-center text-[10px] text-cyber-emerald font-black uppercase tracking-wider"
+          >
+            TARGET RECORD SAVED TO DATABASE
+          </div>
+        </div>
+
+        <!-- TARGET CHANNEL 2: THE COMMUNITY LIVE FEED OVERLAY -->
+        <div
+          class="bg-cyber-card border border-cyber-border rounded p-5 flex flex-col justify-between text-left glow-emerald"
+        >
+          <div>
+            <div class="flex justify-between items-center">
+              <span
+                class="text-[10px] font-black tracking-wider text-cyber-emerald uppercase"
+                >// LIVE_FEED</span
+              >
+              <div class="flex items-center gap-1">
+                <span
+                  class="w-1.5 h-1.5 rounded-full bg-cyber-emerald animate-ping"
+                ></span>
+                <span class="text-[9px] text-cyber-emerald uppercase font-bold"
+                  >CONNECTED</span
+                >
+              </div>
+            </div>
+            <h3
+              class="text-sm font-black text-white uppercase mt-2 tracking-wide"
+            >
+              Join The Pirate Deck
+            </h3>
+            <p class="text-[11px] text-cyber-slateDim mt-1 leading-normal">
+              Get direct developer changelogs, localized market analytics
+              updates, and backend sneak peeks straight inside WhatsApp.
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <a
+              href="https://whatsapp.com/channel/0029Vb7lm4pBVJkzN1Ybav3F"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group w-full border border-cyber-emerald/30 bg-cyber-emerald/5 hover:bg-cyber-emerald/10 text-cyber-emerald text-[11px] font-black tracking-widest py-2 px-4 rounded uppercase transition-all flex items-center justify-center gap-2 text-center"
+            >
+              <span>ENTER WHATSAPP CHANNEL</span>
+              <span class="group-hover:translate-x-1 transition-transform"
+                >→</span
+              >
+            </a>
+          </div>
+        </div>
       </div>
-    </section>
-  </main>
+    </main>
 
-  <footer class="footer">
-    © 2026 Betslip Pirates. ALL RIGHTS RESERVED. DATA VERIFIED VIA API-FOOTBALL.
-  </footer>
+    <!-- COMPONENT GRID STATUS FOOTER METADATA -->
+    <footer
+      class="w-full max-w-6xl mx-auto px-4 py-6 border-t border-cyber-border/40 relative z-10 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] font-bold text-cyber-slateDim uppercase tracking-widest"
+    >
+      <div>&copy; 2026 BETSLIP PIRATES. ALL RIGHTS RESERVED.</div>
+      <div class="flex gap-4">
+        <span>LOC // <span class="text-slate-300">KENYA</span></span>
+        <span
+          >CAMPAIGN //
+          <span class="text-cyber-amber font-black">SEASON_2026/27</span></span
+        >
+      </div>
+    </footer>
 
-  <script>
-    const buyerRadio = document.getElementById("buyer");
-    const sellerRadio = document.getElementById("seller");
-    const joinBtn = document.getElementById("joinBtn");
-    const queueText = document.getElementById("queueText");
+    <script>
+      document
+        .getElementById("wishlistForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
 
-    function syncAudienceState() {
-      if (sellerRadio.checked) {
-        joinBtn.textContent = "Apply as Tipster";
-        queueText.textContent = "Tipster applications are reviewed with ROI and result-proof checks";
-      } else {
-        joinBtn.textContent = "Join List";
-        queueText.textContent = "1,240+ users currently in queue";
-      }
-    }
+          const inputField = document.getElementById("contactInput");
+          const submitBtn = document.getElementById("submitBtn");
+          const successDiv = document.getElementById("formSuccess");
+          const errorDiv = document.getElementById("formError");
+          const dataValue = inputField.value.trim();
 
-    buyerRadio.addEventListener("change", syncAudienceState);
-    sellerRadio.addEventListener("change", syncAudienceState);
-    syncAudienceState();
-  </script>
-</body>
+          // Hide any previous messages
+          successDiv.classList.add("hidden");
+          errorDiv.classList.add("hidden");
+
+          if (!dataValue) {
+            errorDiv.classList.remove("hidden");
+            errorDiv.textContent = "✗ PLEASE ENTER A VALID EMAIL OR PHONE";
+            return;
+          }
+
+          // Disable form while submitting
+          inputField.disabled = true;
+          submitBtn.disabled = true;
+          submitBtn.classList.add("opacity-40");
+          submitBtn.textContent = "SUBMITTING...";
+
+          try {
+            // Get the Google Sheets web app URL from meta tag
+            const scriptURL = document.querySelector(
+              'meta[name="google-sheets-url"]'
+            ).content;
+
+            // Get user's IP address (optional but nice to have)
+            let userIP = "Not captured";
+            try {
+              const ipResponse = await fetch(
+                "https://api.ipify.org?format=json"
+              );
+              const ipData = await ipResponse.json();
+              userIP = ipData.ip;
+            } catch (ipError) {
+              console.log("Could not get IP:", ipError);
+            }
+
+            // Send data to Google Sheets
+            const response = await fetch(scriptURL, {
+              method: "POST",
+              mode: "no-cors", // Required for Google Apps Script
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                contact: dataValue,
+                ip: userIP,
+              }),
+            });
+
+            // Show success (note: no-cors means we can't read the response)
+            successDiv.classList.remove("hidden");
+            successDiv.textContent = "✓ TARGET RECORD SAVED TO DATABASE";
+
+            // Clear the input
+            inputField.value = "";
+          } catch (error) {
+            // Show error
+            errorDiv.classList.remove("hidden");
+            errorDiv.textContent = "✗ ERROR: " + error.message;
+            console.error("Form submission error:", error);
+          } finally {
+            // Re-enable form
+            inputField.disabled = false;
+            submitBtn.disabled = false;
+            submitBtn.classList.remove("opacity-40");
+            submitBtn.textContent = "REQUEST ACCESS KEY";
+          }
+        });
+    </script>
+  </body>
 </html>
