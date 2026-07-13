@@ -2,12 +2,52 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Betslip Pirates — System Launching for the 2026/27 Season</title>
+    <!-- Primary Meta Tags -->
+    <title>Betslip Pirates — Kenya's #1 Betslip Marketplace</title>
+    <meta
+      name="description"
+      content="Kenya's #1 betslip marketplace – No Win, No Pay! Join the waitlist for the 2026/27 season and get early access."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://betslippirates.com/" />
+    <!-- replace with actual URL -->
+    <meta
+      property="og:title"
+      content="Betslip Pirates — Kenya's #1 Betslip Marketplace"
+    />
+    <meta
+      property="og:description"
+      content="Kenya's #1 betslip marketplace – Win or get your money back! Join the waitlist for the 2026/27 season and get early access."
+    />
+    <meta
+      property="og:image"
+      content="https://betslip-pirates.com/img/OG.png"
+    />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://betslip-pirates.com/" />
+    <meta
+      name="twitter:title"
+      content="Betslip Pirates — Kenya's #1 Betslip Marketplace"
+    />
+    <meta
+      name="twitter:description"
+      content="Kenya's #1 betslip marketplace – Win or get your money back! Join the waitlist for the 2026/27 season and get early access."
+    />
+    <meta
+      name="twitter:image"
+      content="https://betslip-pirates.com/img/OG.png"
+    />
     <meta
       name="google-sheets-url"
       content="https://script.google.com/macros/s/AKfycbxslGhGY6WqjmYmT9MRtdgU8D6YJWUrw_WFHuwgf2KEl5yZMD-O3FkVi4td8ZfjB7evGg/exec"
     />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://betslippirates.com/" />
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -46,6 +86,59 @@
       href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- JSON‑LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Betslip Pirates",
+        "description": "Kenya's #1 betslip marketplace with No Win, No Pay guarantee.",
+        "url": "https://betslippirates.com",
+        "logo": "https://betslippirates.com/img/logo.png",
+        "sameAs": [
+          "https://whatsapp.com/channel/0029Vb7lm4pBVJkzN1Ybav3F"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "Customer Support",
+          "availableLanguage": ["English", "Swahili"]
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Betslip Marketplace",
+        "provider": {
+          "@type": "Organization",
+          "name": "Betslip Pirates"
+        },
+        "description": "Buy and sell verified betting slips with automatic refunds if the bet loses.",
+        "areaServed": "Kenya"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Action",
+        "name": "Join the Betslip Pirates Waitlist",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://betslippirates.com/#wishlistFormContainer",
+          "actionPlatform": [
+            "http://schema.org/DesktopWebPlatform",
+            "http://schema.org/MobileWebPlatform"
+          ]
+        },
+        "description": "Get early access to Kenya's #1 betslip marketplace for the 2026/27 season.",
+        "result": {
+          "@type": "Notification",
+          "name": "Early Access Notification"
+        }
+      }
+    </script>
 
     <style>
       /* ── base reset & smooth scrolling ── */
@@ -207,7 +300,7 @@
       <div class="flex items-center gap-3">
         <img
           src="./img/logo.png"
-          alt="Betslip Pirates Logo"
+          alt="Betslip Pirates logo – Kenya's leading betslip marketplace"
           class="h-9 w-auto object-contain select-none drop-shadow-lg"
         />
         <span
@@ -216,14 +309,6 @@
           BETSLIP PIRATES
         </span>
       </div>
-
-      <!-- Status Badge -->
-      <!-- <div
-        class="flex items-center gap-2 border border-marketplace-border bg-marketplace-card/60 px-3.5 py-1.5 rounded-full text-[10px] font-bold tracking-wider text-marketplace-gold uppercase"
-      >
-        <span class="pulse-dot"></spanWin or Get Your Money Back>
-        <span>Target Launch: 2026/27 Season</span>
-      </div> -->
     </header>
 
     <!-- ─── MAIN ─── -->
@@ -264,9 +349,50 @@
         </span>
       </h3>
 
+      <!-- ─── VALUE PROPOSITION CONTENT (NEW) ─── -->
+      <div class="mt-8 max-w-2xl text-left text-sm text-marketplace-slate leading-relaxed space-y-4">
+        <p>
+          <strong class="text-white">Betslip Pirates</strong> is Kenya's first
+          fully transparent betslip marketplace. We connect verified tipsters
+          with bettors who want to win. Every slip is locked before kick‑off,
+          and our <strong class="text-marketplace-gold">"Win or Get Your Money Back"</strong>
+          guarantee ensures you only pay for winning selections.
+        </p>
+        <p>
+          Whether you're a <strong class="text-white">seasoned tipster</strong>
+          looking to monetize your expertise or a <strong class="text-white">smart bettor</strong>
+          seeking reliable picks, our platform provides real‑time performance
+          tracking, automated refunds, and a community of like‑minded Kenyan
+          sports enthusiasts.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+          <div class="flex items-start gap-2">
+            <span class="text-marketplace-gold text-lg">✓</span>
+            <div>
+              <span class="text-white font-bold">Zero Risk</span>
+              <p class="text-[11px] text-marketplace-slate">Get a full refund if the slip loses</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-marketplace-gold text-lg">✓</span>
+            <div>
+              <span class="text-white font-bold">Verified Tipsters</span>
+              <p class="text-[11px] text-marketplace-slate">Track win rates &amp; form history</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-marketplace-gold text-lg">✓</span>
+            <div>
+              <span class="text-white font-bold">Instant Access</span>
+              <p class="text-[11px] text-marketplace-slate">Unlock codes immediately after payment</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ─── PROFILE TOGGLE ─── -->
       <div
-        class="mt-6 inline-flex p-1 bg-marketplace-card border border-marketplace-border rounded-xl relative z-20"
+        class="mt-8 inline-flex p-1 bg-marketplace-card border border-marketplace-border rounded-xl relative z-20"
       >
         <button
           id="toggleTipster"
