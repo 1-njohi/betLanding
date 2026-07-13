@@ -221,6 +221,13 @@
           font-size: 2rem;
           line-height: 1.15;
         }
+        .countdown-box {
+          width: 60px;
+          padding: 0.5rem;
+        }
+        .countdown-number {
+          font-size: 1.5rem;
+        }
       }
 
       /* ── social icon hover ── */
@@ -240,7 +247,7 @@
         opacity: 0;
       }
       .faq-answer.open {
-        max-height: 500px; /* adjust as needed */
+        max-height: 500px;
         opacity: 1;
       }
       .faq-icon {
@@ -248,6 +255,20 @@
       }
       .faq-icon.open {
         transform: rotate(45deg);
+      }
+
+      /* ── Countdown timer glow ── */
+      .countdown-box {
+        background: #112240;
+        border: 1px solid #1e3555;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        min-width: 70px;
+        box-shadow: 0 0 20px rgba(245, 166, 35, 0.05);
+        transition: box-shadow 0.3s ease;
+      }
+      .countdown-box:hover {
+        box-shadow: 0 0 30px rgba(245, 166, 35, 0.15);
       }
     </style>
 
@@ -317,29 +338,12 @@
       class="fixed top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-marketplace-gold to-transparent z-50 opacity-60"
     ></div>
 
-    <!-- ─── HEADER ─── -->
-    <header
-      class="relative z-10 w-full max-w-6xl mx-auto px-4 py-5 flex flex-wrap items-center justify-between gap-3"
-    >
-      <!-- Brand -->
-      <div class="flex items-center gap-3">
-        <img
-          src="./img/logo.png"
-          alt="Betslip Pirates Logo"
-          class="h-9 w-auto object-contain select-none drop-shadow-lg"
-        />
-        <span
-          class="text-sm sm:text-base font-extrabold tracking-[0.2em] text-white uppercase select-none"
-        >
-          BETSLIP PIRATES
-        </span>
-      </div>
-    </header>
-
     <!-- ─── FLOATING BADGE + HAMBURGER TRIGGER ─── -->
     <div
       class="flex items-center fixed top-5 right-5 gap-2 border border-marketplace-border bg-marketplace-card/90 px-3.5 py-1.5 rounded-full text-[10px] font-bold tracking-wider text-marketplace-gold uppercase z-[999] shadow-lg backdrop-blur-sm"
     >
+      <!-- <span class="pulse-dot"></span>
+      <span>Target Launch: 2026/27 Season</span> -->
       <button
         id="hamburgerBtn"
         class="ml-1 flex h-5 w-5 items-center justify-center rounded hover:bg-marketplace-gold/10 transition-colors focus:outline-none"
@@ -436,6 +440,15 @@
             <span class="w-1 h-6 bg-marketplace-gold rounded-full"></span>
             FAQ
           </a>
+
+          <a
+            href="#countdown"
+            onclick="toggleMobileMenu()"
+          class="text-lg font-bold text-white tracking-wide hover:text-marketplace-gold transition-colors flex items-center gap-3"
+          >
+            <span class="w-1 h-6 bg-marketplace-gold rounded-full"></span>
+            Countdown</a
+          >
           <a
             href="#footer"
             onclick="toggleMobileMenu()"
@@ -494,6 +507,25 @@
         </div>
       </div>
     </div>
+
+    <!-- ─── HEADER ─── -->
+    <header
+      class="relative z-10 w-full max-w-6xl mx-auto px-4 py-5 flex flex-wrap items-center justify-between gap-3"
+    >
+      <!-- Brand -->
+      <div class="flex items-center gap-3">
+        <img
+          src="./img/logo.png"
+          alt="Betslip Pirates Logo"
+          class="h-9 w-auto object-contain select-none drop-shadow-lg"
+        />
+        <span
+          class="text-sm sm:text-base font-extrabold tracking-[0.2em] text-white uppercase select-none"
+        >
+          BETSLIP PIRATES
+        </span>
+      </div>
+    </header>
 
     <!-- ─── MAIN ─── -->
     <main
@@ -598,7 +630,6 @@
 
       <!-- ─── PROFILE TOGGLE ─── -->
       <div
-        id="howItWorks"
         class="mt-6 inline-flex p-1 bg-marketplace-card border border-marketplace-border rounded-xl relative z-20"
       >
         <button
@@ -652,6 +683,7 @@
       <!-- ─── HOW IT WORKS (DYNAMIC) ─── -->
       <div
         class="mt-10 w-full max-w-3xl border border-marketplace-border bg-marketplace-card/40 rounded-2xl p-6 backdrop-blur-sm glow-gold"
+        id="howItWorks"
       >
         <div
           class="flex items-center gap-2 text-[10px] font-extrabold tracking-widest text-marketplace-gold uppercase mb-5"
@@ -842,7 +874,7 @@
         </div>
       </div>
 
-      <!-- ─── FAQ SECTION (NEW) ─── -->
+      <!-- ─── FAQ SECTION ─── -->
       <div
         id="faqSection"
         class="mt-12 w-full max-w-3xl border border-marketplace-border bg-marketplace-card/40 rounded-2xl p-6 backdrop-blur-sm glow-gold"
@@ -857,6 +889,73 @@
 
         <!-- Accordion container rendered by JS -->
         <div id="faqContainer" class="space-y-3 text-left"></div>
+      </div>
+      <!-- ─── COUNTDOWN HEADER ─── -->
+      <div
+        id="countdown"
+        class="flex items-center gap-2 text-[10px] font-extrabold tracking-widest text-marketplace-gold uppercase mt-6 mb-1"
+      >
+        <span>CountDown</span>
+        <div class="h-px flex-1 bg-marketplace-border/60"></div>
+        <span>time left</span>
+      </div>
+
+      <!-- ─── LAUNCH DATE INFO ─── -->
+      <div
+        class="text-center text-[11px] font-bold text-marketplace-slate mt-1 mb-4"
+      >
+        Launching:
+        <span class="text-marketplace-gold">17<sup>th</sup> August 2026</span>
+        <span class="text-marketplace-border mx-2">|</span> <br />
+        One week before 2026/27 EPL season
+      </div>
+
+      <!-- ─── COUNTDOWN TIMER ─── -->
+      <div class="flex flex-wrap justify-center items-center gap-3">
+        <div class="countdown-box text-center">
+          <span
+            id="days"
+            class="countdown-number block text-3xl font-black text-marketplace-gold"
+            >00</span
+          >
+          <span
+            class="text-[9px] uppercase text-marketplace-muted tracking-wider"
+            >Days</span
+          >
+        </div>
+        <div class="countdown-box text-center">
+          <span
+            id="hours"
+            class="countdown-number block text-3xl font-black text-marketplace-gold"
+            >00</span
+          >
+          <span
+            class="text-[9px] uppercase text-marketplace-muted tracking-wider"
+            >Hours</span
+          >
+        </div>
+        <div class="countdown-box text-center">
+          <span
+            id="minutes"
+            class="countdown-number block text-3xl font-black text-marketplace-gold"
+            >00</span
+          >
+          <span
+            class="text-[9px] uppercase text-marketplace-muted tracking-wider"
+            >Minutes</span
+          >
+        </div>
+        <div class="countdown-box text-center">
+          <span
+            id="seconds"
+            class="countdown-number block text-3xl font-black text-marketplace-gold"
+            >00</span
+          >
+          <span
+            class="text-[9px] uppercase text-marketplace-muted tracking-wider"
+            >Seconds</span
+          >
+        </div>
       </div>
     </main>
 
@@ -1154,6 +1253,37 @@
       }
     </script>
 
+    <!-- ─── MOBILE MENU TOGGLE ─── -->
+    <script>
+      function toggleMobileMenu() {
+        const overlay = document.getElementById("mobileMenuOverlay");
+        const panel = document.getElementById("mobileMenuPanel");
+        const isHidden = overlay.classList.contains("opacity-0");
+
+        if (isHidden) {
+          overlay.classList.remove("opacity-0", "pointer-events-none");
+          panel.classList.remove("scale-95");
+          panel.classList.add("scale-100");
+          document.body.style.overflow = "hidden";
+        } else {
+          overlay.classList.add("opacity-0", "pointer-events-none");
+          panel.classList.remove("scale-100");
+          panel.classList.add("scale-95");
+          document.body.style.overflow = "";
+        }
+      }
+
+      // Close on Escape key
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          const overlay = document.getElementById("mobileMenuOverlay");
+          if (overlay && !overlay.classList.contains("opacity-0")) {
+            toggleMobileMenu();
+          }
+        }
+      });
+    </script>
+
     <!-- ─── FORM SUBMISSION ─── -->
     <script>
       document
@@ -1218,10 +1348,51 @@
         });
     </script>
 
+    <!-- ─── COUNTDOWN TIMER ─── -->
+    <script>
+      function updateCountdown() {
+        const target = new Date("Aug 17, 2026 00:00:00").getTime();
+        const now = new Date().getTime();
+        const diff = target - now;
+
+        if (diff < 0) {
+          document.getElementById("countdown").innerHTML =
+            '<span class="text-marketplace-gold text-2xl font-black">🚀 Season Launched!</span>';
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = String(days).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("hours").innerText = String(hours).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("minutes").innerText = String(minutes).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("seconds").innerText = String(seconds).padStart(
+          2,
+          "0"
+        );
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    </script>
+
     <!-- ─── FAQ ACCORDION RENDERER ─── -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // ── FAQ data – add more objects here ──
         const faqData = [
           {
             question:
@@ -1238,13 +1409,11 @@
 
         const container = document.getElementById("faqContainer");
 
-        // Render each FAQ item
         faqData.forEach((item, index) => {
           const wrapper = document.createElement("div");
           wrapper.className =
             "border border-marketplace-border/60 rounded-lg overflow-hidden bg-marketplace-card/50";
 
-          // Question button
           const btn = document.createElement("button");
           btn.className =
             "w-full flex items-center justify-between p-4 text-left text-sm font-bold text-white hover:bg-marketplace-card/80 transition-colors focus:outline-none";
@@ -1254,7 +1423,6 @@
             <span class="faq-icon text-marketplace-gold text-xl ml-3 flex-shrink-0">+</span>
           `;
 
-          // Answer div
           const answerDiv = document.createElement("div");
           answerDiv.className = "faq-answer";
           answerDiv.innerHTML = `
@@ -1267,20 +1435,17 @@
           wrapper.appendChild(answerDiv);
           container.appendChild(wrapper);
 
-          // Toggle logic
           btn.addEventListener("click", function () {
             const isOpen = this.getAttribute("aria-expanded") === "true";
             const icon = this.querySelector(".faq-icon");
             const answer = this.nextElementSibling;
 
             if (isOpen) {
-              // Close
               this.setAttribute("aria-expanded", "false");
               answer.classList.remove("open");
               icon.classList.remove("open");
               icon.textContent = "+";
             } else {
-              // Open
               this.setAttribute("aria-expanded", "true");
               answer.classList.add("open");
               icon.classList.add("open");
@@ -1288,39 +1453,6 @@
             }
           });
         });
-      });
-    </script>
-
-    <!-- Menu -->
-    <script>
-      function toggleMobileMenu() {
-        const overlay = document.getElementById("mobileMenuOverlay");
-        const panel = document.getElementById("mobileMenuPanel");
-        const isHidden = overlay.classList.contains("opacity-0");
-
-        if (isHidden) {
-          // Open
-          overlay.classList.remove("opacity-0", "pointer-events-none");
-          panel.classList.remove("scale-95");
-          panel.classList.add("scale-100");
-          document.body.style.overflow = "hidden";
-        } else {
-          // Close
-          overlay.classList.add("opacity-0", "pointer-events-none");
-          panel.classList.remove("scale-100");
-          panel.classList.add("scale-95");
-          document.body.style.overflow = "";
-        }
-      }
-
-      // Close on Escape key
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-          const overlay = document.getElementById("mobileMenuOverlay");
-          if (overlay && !overlay.classList.contains("opacity-0")) {
-            toggleMobileMenu();
-          }
-        }
       });
     </script>
   </body>
