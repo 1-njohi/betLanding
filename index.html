@@ -8,387 +8,499 @@
       name="google-sheets-url"
       content="https://script.google.com/macros/s/AKfycbxslGhGY6WqjmYmT9MRtdgU8D6YJWUrw_WFHuwgf2KEl5yZMD-O3FkVi4td8ZfjB7evGg/exec"
     />
-    <!-- Tailwind CSS Engine CDN -->
+
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              cyber: {
-                canvas: "#0b0f19",
-                card: "#161c2a",
-                popover: "#1c2436",
-                border: "#232d42",
-                sky: "#0ea5e9",
-                emerald: "#10b981",
-                amber: "#f59e0b",
-                slateDim: "#64748b",
+              marketplace: {
+                bg: "#0a1628",
+                card: "#112240",
+                cardHover: "#1a2d4a",
+                border: "#1e3555",
+                gold: "#f5a623",
+                goldLight: "#fcdb8a",
+                green: "#10b981",
+                greenDim: "#0d8a5e",
+                slate: "#94a3b8",
+                text: "#e8edf5",
+                muted: "#64748b",
               },
             },
             fontFamily: {
-              mono: [
-                "ui-monospace",
-                "SFMono-Regular",
-                "Menlo",
-                "Monaco",
-                "Consolas",
-                "monospace",
-              ],
+              sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+              display: ["Inter", "system-ui", "-apple-system", "sans-serif"],
             },
           },
         },
       };
     </script>
 
-    <script>
-      function switchProfileMode(mode) {
-        const btnTipster = document.getElementById("toggleTipster");
-        const btnBuyer = document.getElementById("toggleBuyer");
-        const msgTipster = document.getElementById("msgTipster");
-        const msgBuyer = document.getElementById("msgBuyer");
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap"
+      rel="stylesheet"
+    />
 
-        if (mode === "tipster") {
-          // Update Buttons
-          btnTipster.className =
-            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 bg-cyber-sky text-cyber-canvas";
-          btnBuyer.className =
-            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 text-cyber-slateDim hover:text-white";
-
-          // Update Panes
-          msgTipster.classList.replace("hidden", "block");
-          msgBuyer.classList.replace("block", "hidden");
-        } else {
-          // Update Buttons
-          btnTipster.className =
-            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 text-cyber-slateDim hover:text-white";
-          btnBuyer.className =
-            "px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 bg-cyber-sky text-cyber-canvas";
-
-          // Update Panes
-          msgTipster.classList.replace("block", "hidden");
-          msgBuyer.classList.replace("hidden", "block");
-        }
-      }
-    </script>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght=900&family=Orbitron:wght=700;900&display=swap");
+      /* ── base reset & smooth scrolling ── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
       html {
         scroll-behavior: smooth;
       }
-      .brand-font {
-        font-family: "League Spartan", sans-serif;
+      body {
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        background: #0a1628;
+        color: #e8edf5;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
-      .cyber-font {
-        font-family: "Orbitron", sans-serif;
+
+      /* ── scrollbar styling ── */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
       }
-      .glow-sky {
-        box-shadow: 0 0 15px rgba(14, 165, 233, 0.15);
+      ::-webkit-scrollbar-track {
+        background: #0a1628;
       }
-      .glow-emerald {
-        box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+      ::-webkit-scrollbar-thumb {
+        background: #1e3555;
+        border-radius: 8px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #f5a623;
+      }
+
+      /* ── selection ── */
+      ::selection {
+        background: rgba(245, 166, 35, 0.3);
+        color: #fff;
+      }
+
+      /* ── utility: gold glow (subtle) ── */
+      .glow-gold {
+        box-shadow: 0 0 30px rgba(245, 166, 35, 0.08);
+      }
+      .glow-green {
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.08);
+      }
+
+      /* ── decorative gradient orbs ── */
+      .orb-gold {
+        background: radial-gradient(
+          circle at 30% 40%,
+          rgba(245, 166, 35, 0.06),
+          transparent 70%
+        );
+      }
+      .orb-green {
+        background: radial-gradient(
+          circle at 70% 60%,
+          rgba(16, 185, 129, 0.05),
+          transparent 70%
+        );
+      }
+
+      /* ── card hover lift ── */
+      .card-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .card-lift:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      /* ── status pulse ── */
+      .pulse-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10b981;
+        animation: pulse-dot 1.8s ease-in-out infinite;
+      }
+      @keyframes pulse-dot {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.4;
+          transform: scale(0.85);
+        }
+      }
+
+      /* ── input focus ring ── */
+      .input-focus-ring:focus {
+        outline: none;
+        ring: 2px solid #f5a623;
+        ring-offset: 2px;
+        ring-offset-color: #0a1628;
+        border-color: #f5a623;
+      }
+
+      /* ── gold underline animation ── */
+      .gold-underline {
+        position: relative;
+      }
+      .gold-underline::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0;
+        height: 2px;
+        background: #f5a623;
+        transition: width 0.3s ease;
+      }
+      .gold-underline:hover::after {
+        width: 100%;
+      }
+
+      /* ── responsive tweaks ── */
+      @media (max-width: 640px) {
+        .brand-text {
+          font-size: 0.85rem;
+          letter-spacing: 0.15em;
+        }
+        .hero-title {
+          font-size: 2rem;
+          line-height: 1.15;
+        }
       }
     </style>
   </head>
-  <body
-    class="bg-cyber-canvas text-slate-200 font-mono min-h-screen flex flex-col justify-between antialiased selection:bg-cyber-sky/30 selection:text-white"
-  >
-    <!-- Decorative Top Grid Matrix Glow -->
+
+  <body>
+    <!-- ─── DECORATIVE BACKGROUND ORBS ─── -->
     <div
-      class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[350px] bg-gradient-to-b from-cyber-sky/5 via-transparent to-transparent pointer-events-none z-0 border-t border-cyber-sky/10"
+      class="orb-gold fixed top-[-15%] left-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none z-0"
+    ></div>
+    <div
+      class="orb-green fixed bottom-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full pointer-events-none z-0"
     ></div>
 
-    <!-- MAIN HEADER CONTROL DECK -->
+    <!-- ─── TOP BORDER ACCENT ─── -->
+    <div
+      class="fixed top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-marketplace-gold to-transparent z-50 opacity-60"
+    ></div>
+
+    <!-- ─── HEADER ─── -->
     <header
-      class="w-full max-w-6xl mx-auto px-4 py-6 flex justify-between items-center relative z-10"
+      class="relative z-10 w-full max-w-6xl mx-auto px-4 py-5 flex flex-wrap items-center justify-between gap-3"
     >
-      <!-- BRAND LOGO AREA -->
-      <div class="flex items-center space-x-3">
+      <!-- Brand -->
+      <div class="flex items-center gap-3">
         <img
           src="./img/logo.png"
           alt="Betslip Pirates Logo"
-          class="pointer-events-none h-10 w-auto object-contain select-none drop-shadow-[0_0_8px_rgba(14,165,233,0.3)]"
+          class="h-9 w-auto object-contain select-none drop-shadow-lg"
         />
         <span
-          class="brand-font text-lg tracking-[0.25em] text-slate-100 uppercase select-none hidden sm:block"
+          class="text-sm sm:text-base font-extrabold tracking-[0.2em] text-white uppercase select-none"
         >
           BETSLIP PIRATES
         </span>
       </div>
-      <!-- STATUS BADGE -->
-      <div
-        class="flex items-center space-x-2 border border-cyber-border bg-cyber-card/50 px-3 py-1 rounded text-[10px] font-black tracking-wider text-cyber-emerald uppercase"
+
+      <!-- Status Badge -->
+      <!-- <div
+        class="flex items-center gap-2 border border-marketplace-border bg-marketplace-card/60 px-3.5 py-1.5 rounded-full text-[10px] font-bold tracking-wider text-marketplace-gold uppercase"
       >
-        <span>● TARGET DEPLOYMENT: 2026/27 SEASON</span>
-      </div>
+        <span class="pulse-dot"></spanWin or Get Your Money Back>
+        <span>Target Launch: 2026/27 Season</span>
+      </div> -->
     </header>
 
-    <!-- HERO CONTENT CONTAINER -->
+    <!-- ─── MAIN ─── -->
     <main
-      class="w-full max-w-4xl mx-auto px-4 py-8 relative z-10 flex-1 flex flex-col justify-center items-center text-center"
+      class="relative z-10 w-full max-w-4xl mx-auto px-4 py-6 flex-1 flex flex-col items-center text-center"
     >
-      <!-- System Core Title Heading -->
-      <h1
-        class="cyber-font text-4xl md:text-5xl mb-2 font-black tracking-tight text-white uppercase max-w-3xl leading-none"
-      >
-        BETSLIP-PIRATES
-      </h1>
-      <h1
-        class="cyber-font text-lg mb-6 md:text-5xl font-black tracking-tight text-white uppercase max-w-3xl leading-none"
-      >
-        No Win, No Pay!
-      </h1>
-
-      <!-- Splash Sub-header Accent targeting 2026/27 -->
-      <div
-        class="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-sm border border-cyber-amber/20 bg-cyber-amber/10 text-[10px] font-black tracking-widest text-cyber-amber uppercase"
-      >
-        ⚡ TARGETING THE ONCOMING 2026/27 SEASON KICK-OFF
+      <!-- Hero -->
+      <div class="w-full max-w-3xl">
+        <h1
+          class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white uppercase leading-[1.05]"
+        >
+          BETSLIP-PIRATES
+        </h1>
+        <h2
+          class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-marketplace-gold uppercase leading-[1.1] mt-1"
+        >
+          Win or Get Your Money Back
+        </h2>
       </div>
 
-      <!-- System Core Title Heading -->
-      <h1
-        class="cyber-font text-4xl md:text-5xl font-black tracking-tight text-white uppercase max-w-3xl leading-tight"
-      >
-        Total Transparency for <br class="hidden md:block" />
-        <span
-          class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-sky to-cyber-emerald"
-          >Verified Betting Slips</span
-        >
-      </h1>
-
-      <!-- PROFILE MODE CHANGER (TOGGLE) -->
+      <!-- Season Tag -->
       <div
-        class="mt-6 inline-flex p-1 bg-cyber-card border border-cyber-border rounded-md relative z-20"
+        class="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-marketplace-gold/25 bg-marketplace-gold/10 text-[10px] font-extrabold tracking-widest text-marketplace-gold uppercase"
+      >
+        ⚡ Targeting the Oncoming 2026/27 Season Kick-Off
+      </div>
+
+      <!-- Sub-headline -->
+      <h3
+        class="mt-5 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-white uppercase max-w-3xl leading-tight"
+      >
+        Total Transparency for
+        <br class="hidden sm:block" />
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-marketplace-gold to-marketplace-green"
+        >
+          Verified Betting Slips
+        </span>
+      </h3>
+
+      <!-- ─── PROFILE TOGGLE ─── -->
+      <div
+        class="mt-6 inline-flex p-1 bg-marketplace-card border border-marketplace-border rounded-xl relative z-20"
       >
         <button
           id="toggleTipster"
           onclick="switchProfileMode('tipster')"
           type="button"
-          class="px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 bg-cyber-sky text-cyber-canvas"
+          class="px-5 py-1.5 text-[11px] font-extrabold tracking-wider rounded-lg uppercase transition-all duration-200 bg-marketplace-gold text-[#0a1628]"
         >
-          [CAPTAIN / TIPSTER]
+          Captain / Tipster
         </button>
         <button
           id="toggleBuyer"
           onclick="switchProfileMode('buyer')"
           type="button"
-          class="px-4 py-1.5 text-[11px] font-black tracking-wider rounded uppercase transition-all duration-200 text-cyber-slateDim hover:text-white"
+          class="px-5 py-1.5 text-[11px] font-extrabold tracking-wider rounded-lg uppercase transition-all duration-200 text-marketplace-muted hover:text-white"
         >
-          [PIRATE / BUYER]
+          Pirate / Buyer
         </button>
       </div>
 
-      <!-- CONDITIONALLY RENDERED MESSAGES -->
-      <!-- Tipster View Pane -->
+      <!-- ─── TOGGLE MESSAGES ─── -->
       <p
         id="msgTipster"
-        class="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-white block"
+        class="mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-marketplace-text font-medium"
       >
         You can create betslips and set your selling price. Buyers purchase your
-        slip access, but the capital is locked and released to you only after
-        your selections win. Otherwise, the buyer is fully refunded
-        automatically.
+        slip access, but the capital is locked and released to you
+        <strong class="text-marketplace-gold"
+          >only after your selections win</strong
+        >. Otherwise, the buyer is fully refunded automatically.
       </p>
-
-      <!-- Buyer View Pane -->
       <p
         id="msgBuyer"
-        class="mt-4 max-w-xl text-xs md:text-sm leading-relaxed text-white hidden"
+        class="mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-marketplace-text font-medium hidden"
       >
         Browse the marketplace pool, verify authentic tipster performance
         curves, and instantly unlock code selections via secure platform
-        margins. If the ticket drops, your access escrow fee is automatically
-        returned to your wallet.
+        margins. If the ticket drops, your access escrow fee is
+        <strong class="text-marketplace-green">automatically returned</strong>
+        to your wallet.
       </p>
 
+      <!-- Waitlist Link -->
       <a
         href="#wishlistFormContainer"
-        class="text-cyber-sky hover:underline font-bold block mt-6 text-[25px]"
+        class="text-marketplace-gold hover:text-marketplace-goldLight font-extrabold block mt-5 text-lg sm:text-xl transition-colors gold-underline"
       >
-        Join the waitlist
+        Join the waitlist →
       </a>
 
-      <!-- "HOW IT WORKS" CORE PANEL PIPELINE -->
+      <!-- ─── HOW IT WORKS (DYNAMIC) ─── -->
       <div
-        class="mt-12 w-full max-w-3xl border border-cyber-border bg-cyber-card/30 rounded p-6 text-left backdrop-blur-sm"
+        class="mt-10 w-full max-w-3xl border border-marketplace-border bg-marketplace-card/40 rounded-2xl p-6 backdrop-blur-sm glow-gold"
       >
         <div
-          class="flex items-center gap-2 text-[10px] font-black tracking-wider text-cyber-sky uppercase mb-6"
+          class="flex items-center gap-2 text-[10px] font-extrabold tracking-widest text-marketplace-gold uppercase mb-5"
         >
-          <span>[ LAYER_02_ARCHITECTURE ]</span>
-          <div class="h-[1px] flex-1 bg-cyber-border/60"></div>
-          <span>HOW IT WORKS</span>
+          <span>How It Works</span>
+          <div class="h-px flex-1 bg-marketplace-border/60"></div>
+          <span>Simple Steps</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- Step 1 -->
-          <div
-            class="space-y-2 border-l-2 border-cyber-border pl-4 transition-colors focus-within:border-cyber-sky"
-          >
-            <div class="text-xs font-black text-cyber-sky font-mono">
-              01 // TIPSTERS DEPOSIT SLIPS
+        <!-- TIPSTER STEPS -->
+        <div id="tipsterSteps" class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div class="space-y-1.5 border-l-2 border-marketplace-gold/30 pl-4">
+            <div class="text-xs font-black text-marketplace-gold">
+              1. Create & Lock Your Slip
             </div>
-            <p class="text-[11px] text-cyber-slateDim leading-relaxed">
-              Tipsters lock in their betting codes directly onto the platform
-              before kick-off. No editing, no deletions.
+            <p class="text-[12px] text-marketplace-slate leading-relaxed">
+              Build your betting slip and set your price. Once you submit, it's
+              locked – no changes allowed.
               <a
                 href="#wishlistFormContainer"
-                class="text-cyber-sky hover:underline font-bold block mt-1.5 text-[10px]"
+                class="block mt-1.5 text-[10px] font-bold text-marketplace-gold hover:text-marketplace-goldLight transition-colors"
               >
-                Join the waitlist to become a tipster and sell your betslips
+                Join the waitlist to start selling →
               </a>
             </p>
           </div>
-
-          <!-- Step 2 -->
-          <div class="space-y-2 border-l-2 border-cyber-border pl-4">
-            <div class="text-xs font-black text-cyber-amber font-mono">
-              02 // BUYERS UNLOCK CODES
+          <div class="space-y-1.5 border-l-2 border-marketplace-gold/30 pl-4">
+            <div class="text-xs font-black text-marketplace-gold">
+              2. Buyers Unlock Your Code
             </div>
-            <p class="text-[11px] text-cyber-slateDim leading-relaxed">
-              Buyers transparently browse through verified form history, win
-              rates, and streak data to securely unlock active ticket links
-              instantly.
+            <p class="text-[12px] text-marketplace-slate leading-relaxed">
+              Buyers pay to see your slip. Their payment is held securely – you
+              don't get it yet.
+            </p>
+          </div>
+          <div class="space-y-1.5 border-l-2 border-marketplace-gold/30 pl-4">
+            <div class="text-xs font-black text-marketplace-gold">
+              3. Get Paid Only If You Win
+            </div>
+            <p class="text-[12px] text-marketplace-slate leading-relaxed">
+              If your selection wins, the payment is released to you. If it
+              loses, the buyer gets a full refund – automatically.
+            </p>
+          </div>
+        </div>
+
+        <!-- BUYER STEPS (hidden by default) -->
+        <div
+          id="buyerSteps"
+          class="grid grid-cols-1 sm:grid-cols-3 gap-5 hidden"
+        >
+          <div class="space-y-1.5 border-l-2 border-marketplace-green/30 pl-4">
+            <div class="text-xs font-black text-marketplace-green">
+              1. Browse & Verify
+            </div>
+            <p class="text-[12px] text-marketplace-slate leading-relaxed">
+              Check tipster performance – win rates, streaks, and history – so
+              you know who to trust.
               <a
                 href="#wishlistFormContainer"
-                class="text-cyber-amber hover:underline font-bold block mt-1.5 text-[10px]"
+                class="block mt-1.5 text-[10px] font-bold text-marketplace-green hover:text-marketplace-greenDim transition-colors"
               >
-                Join the waitlist to track and buy top tipsters' betslips
+                Join the waitlist to start buying →
               </a>
             </p>
           </div>
-
-          <!-- Step 3 -->
-          <div class="space-y-2 border-l-2 border-cyber-border pl-4">
-            <div class="text-xs font-black text-cyber-emerald font-mono">
-              03 // AUTOMATIC REVENUE SPLITS
+          <div class="space-y-1.5 border-l-2 border-marketplace-green/30 pl-4">
+            <div class="text-xs font-black text-marketplace-green">
+              2. Unlock a Slip Instantly
             </div>
-            <p class="text-[11px] text-cyber-slateDim leading-relaxed">
-              Once matching scores finalize, profits split directly via
-              automated systems. Zero manual validation waiting rooms.
-              Everything is handled programmatic.
+            <p class="text-[12px] text-marketplace-slate leading-relaxed">
+              Choose a tipster, pay the small fee, and get the betting code
+              right away – no delays.
+            </p>
+          </div>
+          <div class="space-y-1.5 border-l-2 border-marketplace-green/30 pl-4">
+            <div class="text-xs font-black text-marketplace-green">
+              3. Refund If It Loses
+            </div>
+            <p class="text-[12px] text-marketplace-slate leading-relaxed">
+              If the tipster's selection fails, your fee is returned to your
+              wallet automatically. You only pay if you win.
             </p>
           </div>
         </div>
       </div>
 
-      <!-- TWO-COLUMN ACTIONS CONSOLE -->
+      <!-- ─── TWO-COLUMN ACTION CONSOLE ─── -->
       <div class="mt-6 w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- TARGET CHANNEL 1: THE WISHLIST ACCESS BLOCK -->
+        <!-- COL 1: WAITLIST FORM -->
         <div
           id="wishlistFormContainer"
-          class="bg-cyber-card border border-cyber-border rounded p-5 flex flex-col justify-between text-left glow-sky scroll-mt-6"
+          class="bg-marketplace-card border border-marketplace-border rounded-2xl p-5 flex flex-col scroll-mt-6 card-lift glow-gold"
         >
-          <div>
-            <div class="flex justify-between items-center">
-              <span
-                class="text-[10px] font-black tracking-wider text-cyber-sky uppercase"
-                >// PHASE_01</span
-              >
-              <span class="text-[9px] text-cyber-slateDim uppercase font-bold"
-                >Secure Access</span
-              >
-            </div>
-            <h3
-              class="text-sm font-black text-white uppercase mt-2 tracking-wide"
+          <div class="flex justify-between items-center">
+            <span
+              class="text-[10px] font-extrabold tracking-wider text-marketplace-gold uppercase"
+              >Step 1</span
             >
-              Join The Early Wishlist
-            </h3>
-            <p class="text-[11px] text-cyber-slateDim mt-1 leading-normal">
-              Be premium-notified the exact second the marketplace opens to lock
-              down early-bird platform margins for the 2026/27 campaign.
-            </p>
+            <span class="text-[9px] text-marketplace-muted uppercase font-bold"
+              >Secure Access</span
+            >
           </div>
+          <h4
+            class="text-sm font-black text-white uppercase mt-2 tracking-wide"
+          >
+            Join The Early Waitlist
+          </h4>
+          <p class="text-[12px] text-marketplace-slate mt-1 leading-relaxed">
+            Be notified the exact moment the marketplace opens so you can grab
+            early-bird platform margins for the 2026/27 campaign.
+          </p>
 
-          <!-- <form id="wishlistForm" class="mt-4 space-y-2">
-            <input
-              type="text"
-              required
-              placeholder="EMAIL OR PHONE NUMBER"
-              class="w-full bg-cyber-canvas border border-cyber-border rounded px-3 py-2 text-[11px] font-bold text-white placeholder:text-cyber-slateDim/50 uppercase tracking-wider focus:outline-none focus:border-cyber-sky focus:ring-1 focus:ring-cyber-sky transition-all"
-            />
-            <button
-              type="submit"
-              class="w-full bg-cyber-sky hover:bg-cyber-sky/90 text-cyber-canvas text-[11px] font-black tracking-widest py-2 rounded uppercase transition-colors"
-            >
-              REQUEST ACCESS KEY
-            </button>
-          </form> -->
-          <form id="wishlistForm" class="mt-4 space-y-2">
+          <form id="wishlistForm" class="mt-4 space-y-2.5">
             <input
               type="text"
               id="contactInput"
               name="contact"
               required
               placeholder="EMAIL OR PHONE NUMBER"
-              class="w-full bg-cyber-canvas border border-cyber-border rounded px-3 py-2 text-[11px] font-bold text-white placeholder:text-cyber-slateDim/50 uppercase tracking-wider focus:outline-none focus:border-cyber-sky focus:ring-1 focus:ring-cyber-sky transition-all"
+              class="w-full bg-[#0a1628] border border-marketplace-border rounded-xl px-4 py-2.5 text-[12px] font-bold text-white placeholder:text-marketplace-muted/60 uppercase tracking-wider input-focus-ring transition-all"
             />
             <button
               type="submit"
               id="submitBtn"
-              class="w-full bg-cyber-sky hover:bg-cyber-sky/90 text-cyber-canvas text-[11px] font-black tracking-widest py-2 rounded uppercase transition-colors"
+              class="w-full bg-marketplace-gold hover:bg-marketplace-gold/85 text-[#0a1628] text-[11px] font-extrabold tracking-widest py-2.5 rounded-xl uppercase transition-all duration-200"
             >
-              REQUEST EARLY ACCESS
+              Request Early Access
             </button>
           </form>
 
           <div
             id="formSuccess"
-            class="hidden mt-3 text-center text-[10px] text-cyber-emerald font-black uppercase tracking-wider"
+            class="hidden mt-3 text-center text-[11px] text-marketplace-green font-extrabold uppercase tracking-wider"
           >
-            Congratulations, You have been added to the waitlist. You will be
-            among the first to be added into the system as soon as the new
-            season begins. If you haven't yet, join our WhatsApp Channel for
-            frequent updates!
+            ✓ Congratulations! You have been added to the waitlist. You will be
+            among the first to get access as soon as the new season begins. If
+            you haven't yet, join our WhatsApp Channel for frequent updates!
           </div>
-
           <div
             id="formError"
-            class="hidden mt-3 text-center text-[10px] text-cyber-red font-black uppercase tracking-wider"
+            class="hidden mt-3 text-center text-[11px] text-red-400 font-extrabold uppercase tracking-wider"
           >
-            ✗ ERROR SAVING RECORD. PLEASE TRY AGAIN.
+            ✗ Error saving your details. Please try again.
           </div>
         </div>
 
-        <!-- TARGET CHANNEL 2: THE COMMUNITY LIVE FEED OVERLAY -->
+        <!-- COL 2: WHATSAPP CHANNEL -->
         <div
-          class="bg-cyber-card border border-cyber-border rounded p-5 flex flex-col justify-between text-left glow-emerald"
+          class="bg-marketplace-card border border-marketplace-border rounded-2xl p-5 flex flex-col card-lift glow-green"
         >
-          <div>
-            <div class="flex justify-between items-center">
-              <span
-                class="text-[10px] font-black tracking-wider text-cyber-emerald uppercase"
-                >// LIVE_FEED</span
-              >
-              <div class="flex items-center gap-1">
-                <span
-                  class="w-1.5 h-1.5 rounded-full bg-cyber-emerald animate-ping"
-                ></span>
-                <span class="text-[9px] text-cyber-emerald uppercase font-bold"
-                  >CONNECTED</span
-                >
-              </div>
-            </div>
-            <h3
-              class="text-sm font-black text-white uppercase mt-2 tracking-wide"
+          <div class="flex justify-between items-center">
+            <span
+              class="text-[10px] font-extrabold tracking-wider text-marketplace-green uppercase"
+              >Community</span
             >
-              Join The Pirate Deck
-            </h3>
-            <p class="text-[11px] text-cyber-slateDim mt-1 leading-normal">
-              Get direct developer changelogs, localized market analytics
-              updates, and backend sneak peeks straight inside WhatsApp.
-            </p>
+            <div class="flex items-center gap-1.5">
+              <span class="pulse-dot"></span>
+              <span
+                class="text-[9px] text-marketplace-green uppercase font-bold"
+                >Live</span
+              >
+            </div>
           </div>
+          <h4
+            class="text-sm font-black text-white uppercase mt-2 tracking-wide"
+          >
+            Join The Pirate Deck
+          </h4>
+          <p class="text-[12px] text-marketplace-slate mt-1 leading-relaxed">
+            Get direct developer updates, local market analytics, and
+            behind‑the‑scenes news right inside WhatsApp.
+          </p>
 
-          <div class="mt-6">
+          <div class="mt-5">
             <a
               href="https://whatsapp.com/channel/0029Vb7lm4pBVJkzN1Ybav3F"
               target="_blank"
               rel="noopener noreferrer"
-              class="group w-full border border-cyber-emerald/30 bg-cyber-emerald/5 hover:bg-cyber-emerald/10 text-cyber-emerald text-[11px] font-black tracking-widest py-2 px-4 rounded uppercase transition-all flex items-center justify-center gap-2 text-center"
+              class="group w-full border border-marketplace-green/30 bg-marketplace-green/5 hover:bg-marketplace-green/15 text-marketplace-green text-[11px] font-extrabold tracking-widest py-2.5 px-4 rounded-xl uppercase transition-all flex items-center justify-center gap-2 text-center"
             >
-              <span>ENTER WHATSAPP CHANNEL</span>
+              <span>Enter WhatsApp Channel</span>
               <span class="group-hover:translate-x-1 transition-transform"
                 >→</span
               >
@@ -398,35 +510,76 @@
       </div>
     </main>
 
-    <!-- COMPONENT GRID STATUS FOOTER METADATA -->
+    <!-- ─── FOOTER ─── -->
     <footer
-      class="w-full max-w-6xl mx-auto px-4 py-6 border-t border-cyber-border/40 relative z-10 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] font-bold text-cyber-slateDim uppercase tracking-widest"
+      class="relative z-10 w-full max-w-6xl mx-auto px-4 py-5 border-t border-marketplace-border/40 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] font-extrabold text-marketplace-muted uppercase tracking-widest"
     >
       <div>&copy; 2026 BETSLIP PIRATES. ALL RIGHTS RESERVED.</div>
-      <div class="flex gap-4">
-        <span>LOC // <span class="text-slate-300">KENYA</span></span>
+      <div class="flex gap-5">
+        <span>LOC // <span class="text-white">KENYA</span></span>
         <span
           >CAMPAIGN //
-          <span class="text-cyber-amber font-black">SEASON_2026/27</span></span
+          <span class="text-marketplace-gold font-black"
+            >SEASON_2026/27</span
+          ></span
         >
       </div>
     </footer>
 
-    <!-- Google tag (gtag.js) -->
+    <!-- ─── GOOGLE ANALYTICS ─── -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-B0MRZVYZD8"
     ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
+
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-B0MRZVYZD8");
     </script>
 
+    <!-- ─── TOGGLE SCRIPT (now also toggles steps) ─── -->
+    <script>
+      function switchProfileMode(mode) {
+        const btnTipster = document.getElementById("toggleTipster");
+        const btnBuyer = document.getElementById("toggleBuyer");
+        const msgTipster = document.getElementById("msgTipster");
+        const msgBuyer = document.getElementById("msgBuyer");
+        const tipsterSteps = document.getElementById("tipsterSteps");
+        const buyerSteps = document.getElementById("buyerSteps");
+
+        if (mode === "tipster") {
+          // Buttons
+          btnTipster.className =
+            "px-5 py-1.5 text-[11px] font-extrabold tracking-wider rounded-lg uppercase transition-all duration-200 bg-marketplace-gold text-[#0a1628]";
+          btnBuyer.className =
+            "px-5 py-1.5 text-[11px] font-extrabold tracking-wider rounded-lg uppercase transition-all duration-200 text-marketplace-muted hover:text-white";
+          // Messages
+          msgTipster.classList.remove("hidden");
+          msgBuyer.classList.add("hidden");
+          // Steps
+          tipsterSteps.classList.remove("hidden");
+          buyerSteps.classList.add("hidden");
+        } else {
+          // Buttons
+          btnTipster.className =
+            "px-5 py-1.5 text-[11px] font-extrabold tracking-wider rounded-lg uppercase transition-all duration-200 text-marketplace-muted hover:text-white";
+          btnBuyer.className =
+            "px-5 py-1.5 text-[11px] font-extrabold tracking-wider rounded-lg uppercase transition-all duration-200 bg-marketplace-gold text-[#0a1628]";
+          // Messages
+          msgTipster.classList.add("hidden");
+          msgBuyer.classList.remove("hidden");
+          // Steps
+          tipsterSteps.classList.add("hidden");
+          buyerSteps.classList.remove("hidden");
+        }
+      }
+    </script>
+
+    <!-- ─── FORM SUBMISSION ─── -->
     <script>
       document
         .getElementById("wishlistForm")
@@ -439,70 +592,53 @@
           const errorDiv = document.getElementById("formError");
           const dataValue = inputField.value.trim();
 
-          // Hide any previous messages
           successDiv.classList.add("hidden");
           errorDiv.classList.add("hidden");
 
           if (!dataValue) {
             errorDiv.classList.remove("hidden");
-            errorDiv.textContent = "✗ PLEASE ENTER A VALID EMAIL OR PHONE";
+            errorDiv.textContent =
+              "✗ Please enter a valid email or phone number";
             return;
           }
 
-          // Disable form while submitting
           inputField.disabled = true;
           submitBtn.disabled = true;
           submitBtn.classList.add("opacity-40");
-          submitBtn.textContent = "SUBMITTING...";
+          submitBtn.textContent = "Submitting…";
 
           try {
-            // Get the Google Sheets web app URL from meta tag
             const scriptURL = document.querySelector(
               'meta[name="google-sheets-url"]'
             ).content;
 
-            // Get user's IP address (optional but nice to have)
             let userIP = "Not captured";
             try {
-              const ipResponse = await fetch(
-                "https://api.ipify.org?format=json"
-              );
-              const ipData = await ipResponse.json();
+              const ipRes = await fetch("https://api.ipify.org?format=json");
+              const ipData = await ipRes.json();
               userIP = ipData.ip;
-            } catch (ipError) {
-              console.log("Could not get IP:", ipError);
+            } catch (_) {
+              /* ignore */
             }
 
-            // Send data to Google Sheets
-            const response = await fetch(scriptURL, {
+            await fetch(scriptURL, {
               method: "POST",
-              mode: "no-cors", // Required for Google Apps Script
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                contact: dataValue,
-                ip: userIP,
-              }),
+              mode: "no-cors",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ contact: dataValue, ip: userIP }),
             });
 
-            // Show success (note: no-cors means we can't read the response)
             successDiv.classList.remove("hidden");
-            // successDiv.textContent = "✓ TARGET RECORD SAVED TO DATABASE";
-
-            // Clear the input
             inputField.value = "";
-          } catch (error) {
-            // Show error
+          } catch (err) {
             errorDiv.classList.remove("hidden");
-            errorDiv.textContent = "✗ ERROR: " + error.message;
-            console.error("Form submission error:", error);
+            errorDiv.textContent = "✗ Error: " + err.message;
+            console.error("Form submission error:", err);
           } finally {
-            // Re-enable form
             inputField.disabled = false;
             submitBtn.disabled = false;
             submitBtn.classList.remove("opacity-40");
-            submitBtn.textContent = "REQUEST ACCESS KEY";
+            submitBtn.textContent = "Request Early Access";
           }
         });
     </script>
