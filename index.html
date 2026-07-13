@@ -223,6 +223,57 @@
         }
       }
     </style>
+
+    <!-- JSON‑LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Betslip Pirates",
+        "description": "Kenya's #1 betslip marketplace. Win or get your money back.",
+        "url": "https://betslip-pirates.com",
+        "logo": "https://betslip-pirates.com/img/OG.png",
+        "sameAs": ["https://whatsapp.com/channel/0029Vb7lm4pBVJkzN1Ybav3F"],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "Customer Support",
+          "availableLanguage": ["English", "Swahili"]
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Betslip Marketplace",
+        "provider": {
+          "@type": "Organization",
+          "name": "Betslip Pirates"
+        },
+        "description": "Buy and sell verified betting slips with automatic refunds if the bet loses.",
+        "areaServed": "Kenya"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Action",
+        "name": "Join the Betslip Pirates Waitlist",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://betslip-pirates.com/#wishlistFormContainer",
+          "actionPlatform": [
+            "http://schema.org/DesktopWebPlatform",
+            "http://schema.org/MobileWebPlatform"
+          ]
+        },
+        "description": "Get early access to Kenya's #1 betslip marketplace for the 2026/27 season.",
+        "result": {
+          "@type": "Notification",
+          "name": "Early Access Notification"
+        }
+      }
+    </script>
   </head>
 
   <body>
